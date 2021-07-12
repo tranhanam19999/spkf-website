@@ -10,6 +10,7 @@ const IndexPage = () => {
   }, [state])
   return(
     <div>
+      <div>Testing</div>
       <h1>Simple implement Next.js With Redux Toolkit</h1>
       <h2>Counted: {state}</h2>
       <hr/>
