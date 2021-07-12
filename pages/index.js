@@ -6,7 +6,6 @@ const IndexPage = () => {
   const dispatch = useDispatch()
   const state = useSelector(state => state.count)
   useEffect(() => {
-    //console.log(state)
   }, [state])
   return(
     <div>
