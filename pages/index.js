@@ -6,10 +6,10 @@ const IndexPage = () => {
   const dispatch = useDispatch()
   const state = useSelector(state => state.count)
   useEffect(() => {
-    //console.log(state)
   }, [state])
   return(
     <div>
+      <div>Testing</div>
       <h1>Simple implement Next.js With Redux Toolkit</h1>
       <h2>Counted: {state}</h2>
       <hr/>
