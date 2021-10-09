@@ -1,15 +1,16 @@
+import { Backdrop } from '@material-ui/core';
+import { DialogChooseFilter } from 'components/chat/dialog/choose-filter';
 import { useEffect, useState, useRef } from 'react';
-import SocketIOClient from 'socket.io-client';
-import { handleConnectSocket } from '../../utils/socket';
+import { handleConnectSocket } from 'utils/socket';
+import styles from './chat.module.css';
 
-// import { TextField } from ''
 export const ChatContainer = () => {
     const [text, setText] = useState('');
     const [messageReceived, setMessageReceived] = useState([]);
     const [receiver, setReceiver] = useState('');
     const [sender, setSender] = useState('');
     const [socket, setSocket] = useState({});
-    const [roomId, setRoomId] = useState('')
+    const [roomId, setRoomId] = useState('');
 
     useEffect(() => {
         const socketIO = handleConnectSocket();
@@ -25,36 +26,41 @@ export const ChatContainer = () => {
         socket.on('open_room_success', ({ status, roomId }) => {
             if (status === 'OK') {
                 console.log('open room success nha ', roomId);
-                setRoomId(roomId)
-
+                setRoomId(roomId);
             } else {
                 console.log('Failed!');
             }
         });
 
-        socket.on('receive_text', ({receiver, sender, text}) => {
-            console.log('aaaaa ', receiver, sender, text)
+        socket.on('receive_text', ({ receiver, sender, text }) => {
+            console.log('aaaaa ', receiver, sender, text);
 
             // if (sender === receiver) {
-                const slicedMessages = messageReceived.slice();
-                slicedMessages.push({
-                    text: text,
-                    sender: sender,
-                })
-                console.log(slicedMessages)
-                setMessageReceived(slicedMessages);
+            const slicedMessages = messageReceived.slice();
+            slicedMessages.push({
+                text: text,
+                sender: sender,
+            });
+            console.log(slicedMessages);
+            setMessageReceived(slicedMessages);
             // }
         });
-    }
+    };
 
     const handleSendMessage = () => {
-        console.log(receiver, sender, text)
-        socket.emit('send_text', ({receiver: receiver, sender: sender, text: text}));
+        console.log(receiver, sender, text);
+        socket.emit('send_text', { receiver: receiver, sender: sender, text: text });
+    };
+
+    const onSubmitFilter = (options) => {
+        console.log('options ', options);
     };
 
     return (
-        <div>
-            <div>Receiver</div>
+        <Backdrop open={true}>
+            <DialogChooseFilter onSubmitFilter={onSubmitFilter} />
+        </Backdrop>
+        /* <div>Receiver</div>
             <input value={receiver} onChange={(e) => setReceiver(e.target.value)} />
             <div style={{ margin: '4px' }}>Sender</div>
             <input value={sender} onChange={(e) => setSender(e.target.value)} />
@@ -71,7 +77,6 @@ export const ChatContainer = () => {
                 {messageReceived.map((message) => {
                     return <p>{message.sender + '----' +message.text}</p>;
                 })}
-            </div>
-        </div>
+            </div> */
     );
 };

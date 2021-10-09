@@ -1,0 +1,44 @@
+.dialogWrapper {
+    background-color: #fff;
+}
+
+.dialogContainer {
+    padding: 20px;
+}
+
+.dialogHeaderWrapper {
+    padding: 8px;
+}
+
+.dialogHeader {
+    color: #000000;
+    font-size: 20px;
+}
+
+.agesFieldWrapper {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.ageField {
+    max-width: 60px;
+}
+
+.ageField > div > input {
+    padding: 8px;
+}
+
+.ageField > div > input::-webkit-outer-spin-button,
+.ageField > div > input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.ageField > div > input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+.ageDivider {
+    margin: 0px 8px;
+}
