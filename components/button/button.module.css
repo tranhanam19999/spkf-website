@@ -1,0 +1,18 @@
+.customButtonContainer {
+    margin-left: 27px;
+    padding-top: 10px;
+}
+
+.inboundFilterButtonContainer::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+.inboundFilterButtonContainer {
+    width: 100%;
+    display: flex;
+    overflow-x: scroll;
+
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;
+}

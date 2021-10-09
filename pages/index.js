@@ -1,23 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
+import { Grid } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { increValue, decreValue } from '../store/count/countSlice';
+import {increValue, decreValue} from '../store/count/countSlice'
+import Home, {loadingHome} from './home';
 
-const IndexPage = () => {
-    const dispatch = useDispatch();
-    const state = useSelector((state) => state.count);
-    useEffect(() => {
-        //console.log(state)
-    }, [state]);
-    return (
-        <div>
-            <h1>Simple implement Next.js With Redux Toolkit</h1>
-            <h2>Counted: {state}</h2>
-            <hr />
-            <button onClick={() => dispatch(increValue())}>Increment</button>
-            &nbsp;
-            <button onClick={() => dispatch(decreValue())}>decrement</button>
-        </div>
-    );
-};
+const IndexPage = (props) => Home(props)
 
-export default IndexPage;
+export default IndexPage
