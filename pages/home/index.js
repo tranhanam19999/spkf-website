@@ -6,12 +6,6 @@ export const loadingHome = async (ctx) => {
 };
 
 export async function getServerSideProps(ctx) {
-    // const res = {
-    //     props: {
-    //         ...loadingHome(ctx)
-    //     }
-    // }
-    // return res
     const props = {
         home: {
             a: 3,
@@ -21,12 +15,9 @@ export async function getServerSideProps(ctx) {
     return { props };
 }
 
-const renderHome = (props) => {
+export const Home = (props) => {
     console.log('propsfromclient ', props);
     return <a>Home</a>;
 };
 
-export default function Home(props) {
-    console.log('propshome', props);
-    return renderHome(props);
-}
+export default Home
