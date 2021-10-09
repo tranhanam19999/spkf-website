@@ -6,3 +6,28 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: #FF7361;
 }
+
+.Toastify__toast--success {
+    background: #29c038;
+}
+
+.Toastify__toast--error {
+    background: #ff0000;
+}
+
+.Toastify__toast--warn {
+    background: #f2c94c;
+}
+
+.Toastify__toast-body > div:last-child {
+    flex: 1 1;
+    color: #fff
+}
+
+.Toastify__toast-icon > svg {
+    fill: #fff
+}
+
+.Toastify__close-button > svg {
+    color: #fff
+}

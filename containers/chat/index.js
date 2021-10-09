@@ -12,40 +12,40 @@ export const ChatContainer = () => {
     const [socket, setSocket] = useState({});
     const [roomId, setRoomId] = useState('');
 
-    useEffect(() => {
-        const socketIO = handleConnectSocket();
-        setSocket(socketIO);
-    }, []);
+    // useEffect(() => {
+    //     const socketIO = handleConnectSocket();
+    //     setSocket(socketIO);
+    // }, []);
 
-    const joinRoom = () => {
-        socket.emit('open_room', {
-            receiver: receiver,
-            sender: sender,
-        });
+    // const joinRoom = () => {
+    //     socket.emit('open_room', {
+    //         receiver: receiver,
+    //         sender: sender,
+    //     });
 
-        socket.on('open_room_success', ({ status, roomId }) => {
-            if (status === 'OK') {
-                console.log('open room success nha ', roomId);
-                setRoomId(roomId);
-            } else {
-                console.log('Failed!');
-            }
-        });
+    //     socket.on('open_room_success', ({ status, roomId }) => {
+    //         if (status === 'OK') {
+    //             console.log('open room success nha ', roomId);
+    //             setRoomId(roomId);
+    //         } else {
+    //             console.log('Failed!');
+    //         }
+    //     });
 
-        socket.on('receive_text', ({ receiver, sender, text }) => {
-            console.log('aaaaa ', receiver, sender, text);
+    //     socket.on('receive_text', ({ receiver, sender, text }) => {
+    //         console.log('aaaaa ', receiver, sender, text);
 
-            // if (sender === receiver) {
-            const slicedMessages = messageReceived.slice();
-            slicedMessages.push({
-                text: text,
-                sender: sender,
-            });
-            console.log(slicedMessages);
-            setMessageReceived(slicedMessages);
-            // }
-        });
-    };
+    //         // if (sender === receiver) {
+    //         const slicedMessages = messageReceived.slice();
+    //         slicedMessages.push({
+    //             text: text,
+    //             sender: sender,
+    //         });
+    //         console.log(slicedMessages);
+    //         setMessageReceived(slicedMessages);
+    //         // }
+    //     });
+    // };
 
     const handleSendMessage = () => {
         console.log(receiver, sender, text);

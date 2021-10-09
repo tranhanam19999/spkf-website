@@ -3,6 +3,8 @@ import NextApp from 'next/app';
 import withReduxStore from '../lib/with-redux-store';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Layout } from '../components/layout'
 import '../styles/globals.css';
 
@@ -13,6 +15,7 @@ function MyApp({ Component, pageProps, reduxStore }) {
       <Provider store={reduxStore}>
           <Layout isMobile={pageProps.isMobile} >
             <Component {...pageProps} />
+            <ToastContainer limit={2} pauseOnHover={false} hideProgressBar autoClose={2000} closeOnClick />
           </Layout>
       </Provider>
     );
