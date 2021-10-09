@@ -3,16 +3,14 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { NavBar } from '../header/navbar';
 
-
 export const Layout = (props) => {
-    const router = useRouter()
-    const { children, isMobile, } = props;
+    const router = useRouter();
+    const { children, isMobile } = props;
 
-    useEffect(() => {
-    }, [])
+    useEffect(() => {}, []);
 
-    const onSelectedSideBar = selectedOption => {
-        router.push(selectedOption.to)
+    const onSelectedSideBar = (selectedOption) => {
+        router.push(selectedOption.to);
     };
 
     if (isMobile) {
@@ -54,7 +52,7 @@ export const Layout = (props) => {
                 <link rel="shortcut icon" href="/images/favicon-96x96.png" size="96x96" />
             </Head>
             <div>
-                <NavBar/>
+                {router.pathname.includes('/login') ? <></> : <NavBar />}
                 <div>{children}</div>
             </div>
         </>

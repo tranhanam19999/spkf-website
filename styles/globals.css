@@ -1,8 +1,83 @@
+:root {
+    --font-family-main: 'Roboto';
+    --font-family-sans-serif: sans-serif;
+
+    /* Main Colors */
+    --primary-color: #00b46e;
+    --success-color: #29c038;
+    --error-color: #ff0000;
+    --warning-color: #f2c94c;
+    --white-color: #ffffff;
+    --black-color: #000000;
+    --gray-color: #808080;
+
+    /* Popular Font Colors */
+    --alabaster-color: #fafafa;
+    --mystic-color: #e0ebeb;
+    --alto-color: #dadada;
+    --french-gray-color: #c8c8ca;
+    --blue-haze-color: #c3ccdc;
+    --buddha-gold-color: #b4b100;
+    --sun-color: #f9b514;
+    --carrot-orange-color: #ED9C22;
+    --california: #ff9b05;
+    --chestnut-rose-color: #d16d6a;
+    --coral-color: #ff7951;
+    --flamingo-color: #ec5a3a;
+    --pomegranate-color: #f4261a;
+    --min-green: #8cffab;
+    --malachite-color: #12ce66;
+    --downy-color: #66d2a8;
+    --fruit-salad-color: #4caf50;
+    --apple-color: #439841;
+    --salem-color: #09884d;
+    --bali-hai-color: #8090aa;
+    --spun-pearl-color: #b2b1b4;
+    --dove-gray-color: #717171;
+    --dusty-gray-color: #979797;
+    --oslo-gray-color: #899098;
+    --waterloo-color: #7f849a;
+    --scorpion-color: #5f5e5e;
+    --tundora-color: #494848;
+    --rhino-color: #2A3256;
+    --mine-shaft-color: #262626;
+    --ebony-clay-color: #202332;
+    --denim-color: #0d62ca;
+    --blue-ribbon: #0070f3;
+    --royal-blue-color: #2f80ed; 
+
+    /* Popular Border Colors */
+    --catskill-white-color: #e2ebf0;
+    --pink-swan-color: #bdb2b2;
+    --caribbean-green-color: #00d884;
+    
+    /* Popular Background Colors */
+    --mercury-color: #e9e9e9;
+    --concrete-color: #F3F3F3;
+    --black-squeeze-color: #f1f7fa;
+    --aqua-spring-color: #f2fbf8;
+    --link-water-color: #f4f7fc;
+    --gallery-color: #eaeaea;
+    --silver-chalice-color: #ABABAB;
+    --silver-color: #C4C4C4;
+    --pistachio-color: #9ac100;
+    --coral-color: #FF7361;
+
+    /* Font Sizes */
+    --font-size-x-small: 10px;
+    --font-size-small: 12px;
+    --font-size-medium: 14px;
+    --font-size-large: 16px;
+    --font-size-x-large: 18px;
+    --font-size-xx-large: 20px;
+    --font-size-xxx-large: 24px;
+}
+
 html,
 body {
     /* height: 100%; */
     padding: 0;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #FF7361;
+    font-family:  var(--font-family-main), var(--font-family-sans-serif);
+    background-color: var(--coral-color);
 }
