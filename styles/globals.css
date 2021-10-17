@@ -10,9 +10,12 @@
     --white-color: #ffffff;
     --black-color: #000000;
     --gray-color: #808080;
+    --coral-color: #FF7361;
+    --silver-color: #c4c4c4;
+    --alto-color: #e0e0e0;
 
     /* Popular Font Colors */
-    --alabaster-color: #fafafa;
+    /* --alabaster-color: #fafafa;
     --mystic-color: #e0ebeb;
     --alto-color: #dadada;
     --french-gray-color: #c8c8ca;
@@ -44,7 +47,7 @@
     --ebony-clay-color: #202332;
     --denim-color: #0d62ca;
     --blue-ribbon: #0070f3;
-    --royal-blue-color: #2f80ed; 
+    --royal-blue-color: #2f80ed;  */
 
     /* Popular Border Colors */
     --catskill-white-color: #e2ebf0;
@@ -52,7 +55,7 @@
     --caribbean-green-color: #00d884;
     
     /* Popular Background Colors */
-    --mercury-color: #e9e9e9;
+    /* --mercury-color: #e9e9e9;
     --concrete-color: #F3F3F3;
     --black-squeeze-color: #f1f7fa;
     --aqua-spring-color: #f2fbf8;
@@ -61,7 +64,8 @@
     --silver-chalice-color: #ABABAB;
     --silver-color: #C4C4C4;
     --pistachio-color: #9ac100;
-    --coral-color: #FF7361;
+    
+    --dark-blue-color:#2f3239; */
 
     /* Font Sizes */
     --font-size-x-small: 10px;
@@ -79,5 +83,5 @@ body {
     padding: 0;
     margin: 0;
     font-family:  var(--font-family-main), var(--font-family-sans-serif);
-    background-color: var(--coral-color);
+    background-color: var(--white-color);
 }
