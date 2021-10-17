@@ -1,6 +1,6 @@
-import { RenderHomeDesktop } from '../../containers/desktop/home';
+import { RenderCategoryDesktop } from '../../containers/desktop/category';
 
-export const loadingHome = async (ctx) => {
+export const loadingCategory = async (ctx) => {
     const props = {
         home: { a: 3 },
     };
@@ -17,15 +17,14 @@ export async function getServerSideProps(ctx) {
     return { props };
 }
 
-export const Home = (props) => {
+export const Category = (props) => {
     const { isMobile } = props;
-    console.log("props", isMobile)
     if (isMobile) {
-        return  <a>Home</a>;
+        return  <a>Category</a>;
     }
     return (
-        <RenderHomeDesktop isMobile={isMobile} />
+        <RenderCategoryDesktop isMobile={isMobile} />
     )
 };
 
-export default Home
+export default Category

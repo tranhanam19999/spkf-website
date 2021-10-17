@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import * as styles from '../login/Login.module.css';
+import { Button } from '@material-ui/core';
 
 export const LoginPage = () => {
+    const router = useRouter()
+
     const { register, handleSubmit, errors } = useForm();
     const submitForm = (values) => {
         console.log("alo",{...values});
+        router.push('/home')
     };
 
     return (
@@ -29,7 +34,7 @@ export const LoginPage = () => {
                             {...register("password")}
                         />
                         <div>
-                            <button className={styles.button} type="submit" form="login-form"> Submit</button>
+                            <Button id={styles.button} type="submit" form="login-form"> Submit</Button>
                         </div>
                     </form>
                 </div>

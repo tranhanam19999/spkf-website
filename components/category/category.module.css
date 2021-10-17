@@ -1,0 +1,27 @@
+.categoryWapper {
+    -webkit-box-shadow: 0px 0px 13px -3px #777;
+    box-shadow: 0px 0px 13px -3px #777;
+}
+
+.categoryItem.categoryItem.categoryItem {
+    height: 35px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+}
+
+.categoryText {
+    list-style: none;
+    display: inline-block;
+    background-color: var(--silver-color);
+    padding: 5px 15px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: var(--black-color);
+    cursor: pointer;
+}
+
+.categoryText:hover {
+    background-color: var(--coral-color);
+    color: var(--black-color)
+}
