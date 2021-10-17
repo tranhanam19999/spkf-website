@@ -11,3 +11,5 @@ export const hashCode = (text) => {
     }
     return hash;
 };
+
+export const MOBILE = /Android|BlackBerry|iPhone|iPod|Opera Mini|IEMobile|WPDesktop/i;
