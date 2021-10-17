@@ -3,22 +3,25 @@ import NextApp from 'next/app';
 import withReduxStore from '../lib/with-redux-store';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
-import { Layout } from '../components/layout'
+import { Layout } from '../components/layout';
 import '../styles/globals.css';
 
 const MOBILE = /Android|BlackBerry|iPhone|iPod|Opera Mini|IEMobile|WPDesktop/i;
 function MyApp({ Component, pageProps, reduxStore }) {
-  console.log("appjs",pageProps)
-      return (
-      <Provider store={reduxStore}>
-          <Layout isMobile={pageProps.isMobile} >
-            <Component {...pageProps} />
-          </Layout>
-      </Provider>
+    const { isMobile } = pageProps;
+
+    return (
+        <Provider store={reduxStore}>
+            <Layout isMobile={isMobile}>
+                <Component {...pageProps} />
+            </Layout>
+        </Provider>
     );
 }
 
 MyApp.getInitialProps = async (appContext) => {
+    const appProps = await NextApp.getInitialProps(appContext);
+
     let isMobile = '';
     try {
         const UA = appContext.ctx.req.headers['user-agent'];
@@ -28,9 +31,10 @@ MyApp.getInitialProps = async (appContext) => {
     }
 
     return {
+        ...appProps,
         pageProps: {
-            isMobile: !!isMobile,
-        },
+            isMobile: !!isMobile
+        }
     };
 };
 
