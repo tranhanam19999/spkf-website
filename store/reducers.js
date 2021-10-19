@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux'
 
 import count from './count/countSlice'
+import user from './user/userSlice'
 
 const reducers = combineReducers({ 
-  count,
+  count,user,
 })
 
 export default reducers;

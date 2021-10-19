@@ -20,9 +20,9 @@ export async function getServerSideProps(ctx) {
 export const Home = (props) => {
     const { isMobile } = props;
     console.log("props", isMobile)
-    if (isMobile) {
-        return  <a>Home</a>;
-    }
+    // if (isMobile) {
+    //     return  <a>Home</a>;
+    // }
     return (
         <RenderHomeDesktop isMobile={isMobile} />
     )

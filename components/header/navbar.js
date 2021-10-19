@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -10,19 +11,33 @@ import {
 } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './header.module.css';
 import { useRouter } from 'next/router';
+import { logoutUser } from '../../store/user/userSlice';
 
 export const NavBar = () => {
+    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const { user } = useSelector((state) => state.user);
     const isMenuOpen = Boolean(anchorEl);
-    const router = useRouter()
+    const router = useRouter();
 
     const handleRedirectHome = () => {
         router.push({
             pathname: '/',
         });
-    }
+    };
+
+    const handleRedirect = () => {
+        if (user) {
+            dispatch(logoutUser());
+        } else {
+            router.push({
+                pathname: '/login',
+            });
+        }
+    };
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -53,14 +68,21 @@ export const NavBar = () => {
         </>
     );
 
+    useEffect(() => {
+    },[user])
+
     return (
         <div className={styles.grow}>
             <AppBar position="static" className={styles.appBar}>
                 <Toolbar>
                     <Grid container item xs={8}>
                         <Grid item container xs={2} justifyContent="center" alignItems="center">
-                            <Grid item xs={12} onClick={()=>handleRedirectHome()}>
-                                <Typography className={`${styles.title} ${styles.forumText}`} variant="h6" noWrap>
+                            <Grid item xs={12} onClick={() => handleRedirectHome()}>
+                                <Typography
+                                    className={`${styles.title} ${styles.forumText}`}
+                                    variant="h6"
+                                    noWrap
+                                >
                                     Forum
                                 </Typography>
                                 <Typography className={styles.title} variant="h6" noWrap>
@@ -74,8 +96,13 @@ export const NavBar = () => {
                             <Button>Chat ngẫu nhiên</Button>
                         </Grid>
                     </Grid>
-                    {/* <Grid container xs={1} justifyContent="flex-end" alignItems="center">
-                        <Grid item xs={6}>
+                    <Grid container xs={4} justifyContent="flex-end" alignItems="center">
+                        <Grid item xs={5} className={styles.btnWapper}>
+                            <Button onClick={() => handleRedirect()}>
+                                {user ? 'Đăng xuẩt' : 'Đăng nhập'}
+                            </Button>
+                        </Grid>
+                        {/* <Grid item xs={6}>
                             <IconButton
                                 edge="end"
                                 aria-label="account of current user"
@@ -86,8 +113,8 @@ export const NavBar = () => {
                             >   
                             <FontAwesomeIcon icon={faUser} />
                             </IconButton>
-                        </Grid>
-                    </Grid> */}
+                        </Grid> */}
+                    </Grid>
                 </Toolbar>
             </AppBar>
             {/* {renderMenu} */}
