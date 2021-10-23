@@ -1,23 +1,31 @@
+import { RenderHomeDesktop } from '../../containers/desktop/home';
 
-export const loadingHome = async(ctx) => {
-    props = {
-        home: [],
-    }
-    return props
-}
+export const loadingHome = async (ctx) => {
+    const props = {
+        home: { a: 3 },
+    };
+    return props;
+};
 
 export async function getServerSideProps(ctx) {
-    const res = loadingHome(ctx);
-    return res
+    const props = {
+        home: {
+            a: 3,
+        },
+    };
+
+    return { props };
 }
 
-const renderHome = (props) => {
-    console.log("props", props);
+export const Home = (props) => {
+    const { isMobile } = props;
+    console.log("props", isMobile)
+    // if (isMobile) {
+    //     return  <a>Home</a>;
+    // }
     return (
-        <a>Home</a>
+        <RenderHomeDesktop isMobile={isMobile} />
     )
-}
-
-export default function Home(props) {
-    return renderHome(props)
 };
+
+export default Home
