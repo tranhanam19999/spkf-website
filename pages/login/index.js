@@ -9,13 +9,12 @@ import {loginUser} from '../../store/user/userSlice';
 export const LoginPage = () => {
     const router = useRouter()
     const dispatch = useDispatch()
-    const {user} = useSelector(state=> { console.log(state); return state.user})
+    const {user} = useSelector(state=> state.user)
     const [isRegister, setIsRegister] = useState(false)
 
     // const { register, handleSubmit, errors } = useForm();
     const loginForm = useForm();
     const submitForm = (form) => {
-        console.log("alo",{form});
         dispatch(loginUser(form.email, form.password));
         // router.push('/home')
     };

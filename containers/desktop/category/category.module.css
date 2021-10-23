@@ -3,7 +3,7 @@
 }
 
 .wapper.wapper.wapper {
-    padding: 10px 50px 20px 50px;
+    padding: 10px 15% 20px 15%;
     background-color: var(--concrete-color);
 }
 
@@ -17,6 +17,15 @@
     background-color: var(white);
     -webkit-box-shadow: 0px 0px 13px -3px #777;
     box-shadow: 0px 0px 13px -3px #777;
+    height: max-content;
+}
+
+.cardContainer > div {
+    width: 100%;
+}
+
+.cardNewsWapper.cardNewsWapper.cardNewsWapper {
+    padding: 4px
 }
 
 .rightBox {
@@ -24,46 +33,8 @@
     padding-left: 8px;
 }
 
-/* .cardItem {
-    padding: 10px;
-    display: table;
-    width: calc(100% - 20px);
-    table-layout: fixed;
-    align-items: center;
-} */
-
-/* .cardTitle {
-    display: table-cell;
-    vertical-align: middle;
-    padding: 0 10px 0 10px;
-} */
-
-/* .cardIcon {
-    display: table-cell;
-    width: 50px;
-} */
-
-/* .imgWapper {
-    display: table-cell;
-    width: 50px;
-    padding: 0 10px 0 10px;
+.listCateWapper.listCateWapper.listCateWapper {
+    padding: 0;
+    max-height: 830px;
+    overflow: auto;
 }
-
-.imageCircle {
-    border-radius: 50%;
-    height: 50px;
-    width: 50px;
-}
-
-.postInfo {
-    vertical-align: middle;
-    display: table-cell;
-    width: 40%;
-}
-
-.postTitle {
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    display: -webkit-box;
-} */
