@@ -45,6 +45,8 @@ function MyApp({ Component, pageProps, reduxStore }) {
 }
 
 MyApp.getInitialProps = async (appContext) => {
+    const appProps = await NextApp.getInitialProps(appContext);
+
     let isMobile = '';
     try {
         const UA = appContext.ctx.req.headers['user-agent'];
@@ -54,9 +56,10 @@ MyApp.getInitialProps = async (appContext) => {
     }
 
     return {
+        ...appProps,
         pageProps: {
-            isMobile: !!isMobile,
-        },
+            isMobile: !!isMobile
+        }
     };
 };
 
