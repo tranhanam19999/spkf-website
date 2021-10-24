@@ -34,6 +34,7 @@ export const CustomButton = (props) => {
         borderRadius: '16px',
         fontStyle: 'normal',
         fontSize: '12px',
+        fontWeight: '500',
         lineHeight: '16px',
         width: 'auto',
         color: '#fff',
