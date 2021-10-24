@@ -1,0 +1,105 @@
+.dialogWrapper {
+    position: relative;
+    top: 25%;
+    max-width: 600px;
+    left: calc(50% - 260px);
+    border-radius: 20px;
+    border: 2px solid grey;
+
+    background: #fff;
+}
+
+.dialogContainer {
+    padding: 20px;
+}
+
+.dialogHeaderWrapper {
+    padding-bottom: 8px;
+}
+
+.dialogHeader {
+    color: #000000;
+    font-size: 20px;
+}
+
+.agesFieldWrapper {
+    margin-top: 8px;
+
+    display: flex;
+    align-items: center;
+}
+
+.ageField {
+    max-width: 40px;
+}
+
+.ageField > div > input {
+    padding: 8px;
+    text-align: center;
+}
+
+.ageField > div > input::-webkit-outer-spin-button,
+.ageField > div > input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.ageField > div > input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+.ageDivider {
+    margin: 0px 8px;
+}
+
+.dialogActionWrapper {
+    margin-top: 12px;
+}
+
+.dialogActionContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dialogActionContainer > div {
+    margin-left: 8px;
+}
+
+.backdropWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.chatDetailWrapper {
+    display: inline-block;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.chatDetailContainer {
+    padding: 8px 12px;
+    border-radius: 6px;
+    max-width: 40%;
+    background: #c4c4c4;
+}
+
+.alignLeft {
+    float: left;
+}
+
+.alignRight {
+    float: right;
+}
+
+.textDetail {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+}
