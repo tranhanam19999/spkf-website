@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './header.module.css';
 import { useRouter } from 'next/router';
 import { logoutUser } from '../../store/user/userSlice';
+import { PATH } from 'utils/constant';
 
 export const NavBar = () => {
     const dispatch = useDispatch();
@@ -29,8 +30,11 @@ export const NavBar = () => {
         });
     };
 
-    const handleRedirect = () => {
-        if (user) {
+    const handleRedirect = (path) => {
+        if (path) {
+            router.push(path)
+        }
+        else if (user) {
             dispatch(logoutUser());
         } else {
             router.push({
@@ -91,9 +95,9 @@ export const NavBar = () => {
                             </Grid>
                         </Grid>
                         <Grid item xs={10} className={styles.btnWapper}>
-                            <Button>Diễn đàn</Button>
-                            <Button>Thành viên</Button>
-                            <Button>Chat ngẫu nhiên</Button>
+                            <Button onClick={() => handleRedirect(PATH.TO_HOME)}>Diễn đàn</Button>
+                            <Button onClick={() => handleRedirect(PATH.TO_HOME)}>Thành viên</Button>
+                            <Button onClick={() => handleRedirect(PATH.TO_CHAT)}>Chat ngẫu nhiên</Button>
                         </Grid>
                     </Grid>
                     <Grid container xs={4} justifyContent="flex-end" alignItems="center">
@@ -110,7 +114,7 @@ export const NavBar = () => {
                                 aria-haspopup="true"
                                 onClick={() => handleMenu()}
                                 color="inherit"
-                            >   
+                            >
                             <FontAwesomeIcon icon={faUser} />
                             </IconButton>
                         </Grid> */}

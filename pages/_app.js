@@ -1,11 +1,12 @@
 import React from 'react';
-import withReduxStore from '../lib/with-redux-store';
+import NextApp from 'next/app';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { Layout } from '../components/layout';
+import withReduxStore from '../lib/with-redux-store';
 import '../styles/globals.css';
 import { MOBILE } from 'utils';
 

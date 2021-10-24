@@ -2,25 +2,27 @@ import { Backdrop, TextField } from '@material-ui/core';
 import { CustomButton } from 'components/button';
 import { DialogChooseFilter } from 'components/chat/dialog/choose-filter';
 import { useEffect, useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { notify } from 'utils/notify';
 import { handleConnectSocket } from 'utils/socket';
 import styles from './chat.module.css';
 
 export const ChatContainer = () => {
+    const { user } = useSelector((state) => state.user);
     const [text, setText] = useState('');
     const [messageReceived, setMessageReceived] = useState([]);
     const [receiver, setReceiver] = useState('');
-    const [sender, setSender] = useState('');
     const [socket, setSocket] = useState({});
     const [roomId, setRoomId] = useState('');
     const [openBackDrop, setOpenBackDrop] = useState(false);
-    const [username, setUsername] = useState('');
+    const [filterOptions, setFilterOptions] = useState({})
 
-    const openEvents = (socket) => {
-        socket.on('match', ({partner, partner_socketId}) => {
+    const openEvents = (socket, data) => {
+        socket.on('matched', ({partner, partner_socketId}) => {
+            console.log('e match roi ne')
             socket.emit('open_room', {
                 receiver: partner,
-                sender: username,
+                sender: user.username,
             });
         })
 
@@ -40,38 +42,43 @@ export const ChatContainer = () => {
             const slicedMessages = messageReceived.slice();
             slicedMessages.push({
                 text: text,
-                sender: sender,
+                sender: user.username,
             });
             console.log(slicedMessages);
             setMessageReceived(slicedMessages);
             // }
         });
+
+        socket.once('connect', () => {
+            socket.emit('find_partner', {
+                gender: data.selectedGender || filterOptions.selectedGender,
+                age: {
+                    from: data.fromAge || filterOptions.fromAge,
+                    to: data.toAge || filterOptions.toAge,
+                },
+                source: user.username,
+                socketId: socket.id
+            });
+        });
     };
 
     const handleSendMessage = () => {
-        console.log(receiver, sender, text);
-        socket.emit('send_text', { receiver: receiver, sender: sender, text: text });
+        console.log(receiver, user.username, text);
+        socket.emit('send_text', { receiver: receiver, sender: user.username, text: text });
     };
 
     const onSubmitFilter = (mode, data) => {
         if (mode === 'CANCEL') {
             setOpenBackDrop(false);
         } else if (mode === 'OK') {
+            setFilterOptions(data)
             const socketIO = handleConnectSocket();
             if (!socketIO) {
                 notify.error('Có lỗi khi kết nối vui lòng load lại trang');
             } else {
+                console.log(data)
                 setSocket(socketIO);
-                socketIO.emit('find_partner', {
-                    socketId: socketIO.id,
-                    gender: data.selectedGender,
-                    age: {
-                        from: data.fromAge,
-                        to: data.toAge,
-                    },
-                    source: username,
-                });
-                openEvents(socketIO)
+                openEvents(socketIO, data)
             }
         }
     };
@@ -82,7 +89,6 @@ export const ChatContainer = () => {
 
     return (
         <>
-            <TextField value={username} onChange={(e) => setUsername(e.target.value)} />
             <div className={styles.startChatWrapper}>
                 <CustomButton text="Bắt đầu chat" onClick={onOpenDialogFilter} />
             </div>
