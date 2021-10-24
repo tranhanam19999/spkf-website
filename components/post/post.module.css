@@ -56,6 +56,10 @@
     /* margin: 10px; */
 }
 
+.wapperTitleCard:hover {
+    background-color: var(--silver-color);
+}
+
 .wapper {
     min-height: 78px;
     cursor: pointer;

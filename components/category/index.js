@@ -80,7 +80,6 @@ export const Category = ({isCate}) => {
             </Grid>
             <Grid item container xs={12} className={isCate ? styles.listCateWapper : styles.listCart}>
                 {category.map((item, index) => {
-                    console.log('item', item);
                     return (
                         <Grid
                             item

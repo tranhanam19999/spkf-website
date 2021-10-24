@@ -18,9 +18,15 @@ export const RenderHomeDesktop = () => {
         author: 'Hà Nam',
         title: 'Chi sẻ mẹo để có thể trở thàng full sờ tắc Developer',
         category: 'Học tập',
-        createTime: 1519129853500,
+        createTime: "2021-09-04T09:35:29.528Z",
         totalViews: 100,
     };
+
+    const handleRedirectPost = () => {
+        router.push({
+            pathname: '/post/detail',
+        });
+    }
 
     return (
         <>
@@ -55,7 +61,7 @@ export const RenderHomeDesktop = () => {
                 </div>
                 <Grid container className={styles.cardWapper} spacing={2}>
                     <Grid item xs={8} container>
-                        <Grid item container xs={12} className={styles.newsWapper}>
+                        <Grid item container xs={12}>
                             <Grid item xs={12}>
                                 <MyCardHeader title="Bản tin" />
                             </Grid>
@@ -67,6 +73,7 @@ export const RenderHomeDesktop = () => {
                                             xs={12}
                                             key={index}
                                             className={styles.cardNewsWapper}
+                                            onClick={() => handleRedirectPost()}
                                         >
                                             <TitleCard post={post} />
                                         </Grid>
@@ -75,7 +82,7 @@ export const RenderHomeDesktop = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={4} className={styles.rightBoxWapper}>
+                    <Grid item xs={4} className={`${styles.rightBoxWapper}`}>
                         <Category/>
                     </Grid>
                 </Grid>
@@ -83,29 +90,3 @@ export const RenderHomeDesktop = () => {
         </>
     );
 };
-
-{
-    /* <Grid item container xs={12} className={styles.matingWapper}>
-    <Grid item xs={12}>
-        <MyCardHeader title="Góc Mating" />
-    </Grid>
-    <Grid item container spacing={0} xs={12} className={styles.listCart}>
-        {news.map((item, index) => {
-            return (
-                <CardPost
-                    icon={
-                        <FontAwesomeIcon
-                            icon={faComment}
-                            color="#86adc1"
-                            size="sm"
-                        />
-                    }
-                    titleCard="Thông báo"
-                    post={post}
-                    index={index}
-                />
-            );
-        })}
-    </Grid>
-</Grid> */
-}
