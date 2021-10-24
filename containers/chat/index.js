@@ -64,8 +64,8 @@ export const ChatContainer = () => {
         });
 
         socket.on('receive_text', ({ receiver, sender, text }) => {
-            console.log('aaaaa ', receiver, sender, text);
-
+            // console.log('aaaaa ', receiver, sender, text);
+            ////
             // if (sender === receiver) {
             const slicedMessages = messageReceived.slice();
             slicedMessages.push({
