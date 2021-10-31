@@ -1,11 +1,12 @@
 import SocketIOClient from 'socket.io-client';
+const PREFIX = 'http://192.168.1.36:4000'
 
 export const handleConnectSocket = () => {
-    fetch('http://localhost:4000/chat', {
+    fetch(`${PREFIX}/chat`, {
         method: 'GET',
     });
 
-    const socket = SocketIOClient.connect('http://localhost:4000', {
+    const socket = SocketIOClient.connect(PREFIX, {
         path: '/chat',
         transports: ['websocket']
     });

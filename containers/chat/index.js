@@ -1,53 +1,30 @@
-import { faInfoCircle, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Backdrop, TextField } from '@material-ui/core';
-import { StylesContext } from '@material-ui/styles';
-import { CustomButton } from 'components/button';
-import { ChatDetail } from 'components/chat/detail';
-import { DialogChooseFilter } from 'components/chat/dialog/choose-filter';
-import { useEffect, useState, useRef } from 'react';
+import { CircularProgress } from '@material-ui/core';
+import router from 'next/router';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { color } from 'utils/constant';
 import { notify } from 'utils/notify';
 import { handleConnectSocket } from 'utils/socket';
 import styles from './chat.module.css';
+import { ConversationList } from './conversation';
+import { FilterDialog } from './filter-dialog';
+import { HeaderChat } from './header';
+import { MessageField } from './message-field';
 
 export const ChatContainer = () => {
     const { user } = useSelector((state) => state.user);
     const [message, setMessage] = useState('');
-    const [messageReceived, setMessageReceived] = useState([]);
+    const [messages, setMessages] = useState([]);
     const [receiver, setReceiver] = useState('');
     const [socket, setSocket] = useState({});
     const [roomId, setRoomId] = useState('');
-    const [openBackDrop, setOpenBackDrop] = useState(false);
+    const [isFinding, setIsFinding] = useState(false);
+    const [shouldOpenFilter, setShouldOpenFilter] = useState(true);
     const [filterOptions, setFilterOptions] = useState({});
 
-    const mockChatList = [
-        {
-            sender: 'a',
-            receiver: 'b',
-            text: 'abc123',
-        },
-        {
-            sender: 'b',
-            receiver: 'a',
-            text: '231',
-        },
-        {
-            sender: 'a',
-            receiver: 'b',
-            text: 'yoo',
-        },
-        {
-            sender: 'b',
-            receiver: 'a',
-            text: 'xzc',
-        },
-    ]
-
-    const openEvents = (socket, data) => {
+    const openEvents = (socket) => {
         socket.on('matched', ({ partner, partner_socketId }) => {
-            console.log('e match roi ne');
+            console.log(`${user.username} đã match với `, partner);
+            setReceiver(partner)
             socket.emit('open_room', {
                 receiver: partner,
                 sender: user.username,
@@ -57,6 +34,7 @@ export const ChatContainer = () => {
         socket.on('open_room_success', ({ status, roomId }) => {
             if (status === 'OK') {
                 console.log('open room success nha ', roomId);
+                setIsFinding(false)
                 setRoomId(roomId);
             } else {
                 console.log('Failed!');
@@ -64,111 +42,80 @@ export const ChatContainer = () => {
         });
 
         socket.on('receive_text', ({ receiver, sender, text }) => {
-            // console.log('aaaaa ', receiver, sender, text);
+            console.log('aaaaa ', receiver, sender, text);
             ////
             // if (sender === receiver) {
-            const slicedMessages = messageReceived.slice();
-            slicedMessages.push({
+            const newMessage = {
                 text: text,
-                sender: user.username,
-            });
-            console.log(slicedMessages);
-            setMessageReceived(slicedMessages);
+                receiver: user.username,
+                sender: sender
+            }
+
+            setMessages([...messages, newMessage]);
             // }
         });
 
         socket.once('connect', () => {
             socket.emit('find_partner', {
-                gender: data.selectedGender || filterOptions.selectedGender,
+                gender: filterOptions.gender,
                 age: {
-                    from: data.fromAge || filterOptions.fromAge,
-                    to: data.toAge || filterOptions.toAge,
+                    from: filterOptions.fromAge,
+                    to: filterOptions.toAge,
                 },
                 source: user.username,
                 socketId: socket.id,
             });
         });
+
+        socket.on('find_partner_pending', () => {
+            setIsFinding(true);
+        });
     };
 
     const handleSendMessage = () => {
-        console.log(receiver, user.username, text);
-        socket.emit('send_text', { receiver: receiver, sender: user.username, text: text });
+        socket.emit('send_text', { receiver: receiver, sender: user.username, text: message });
     };
 
     const onSubmitFilter = (mode, data) => {
+        setShouldOpenFilter(false);
         if (mode === 'CANCEL') {
-            setOpenBackDrop(false);
+            // TODO: Center "Người lạ đang chờ bạn chat đó, mau tìm kiếm đi"
         } else if (mode === 'OK') {
             setFilterOptions(data);
-            const socketIO = handleConnectSocket();
-            if (!socketIO) {
-                notify.error('Có lỗi khi kết nối vui lòng load lại trang');
-            } else {
-                console.log(data);
-                setSocket(socketIO);
-                openEvents(socketIO, data);
-            }
         }
     };
 
-    const onOpenDialogFilter = () => {
-        setOpenBackDrop(true);
+    const handleStartChat = () => {
+        const socketIO = handleConnectSocket();
+        if (!socketIO) {
+            notify.error('Có lỗi khi kết nối');
+            router.reload();
+        } else {
+            setSocket(socketIO);
+            openEvents(socketIO);
+        }
     };
 
     return (
         <>
-            {/* <div className={styles.startChatWrapper}>
-                <CustomButton text="Bắt đầu chat" onClick={onOpenDialogFilter} />
-            </div>
-            {openBackDrop && <DialogChooseFilter onSubmitFilter={onSubmitFilter} />} */}
-            <div className={styles.headerChatWrapper}>
-                <div className={styles.headerChatContainer}>
-                    <span className={styles.headerChatTitle}>Chat ngẫu nhiên</span>
-                    <div className={styles.otherInfosHeaderWrapper}>
-                        <CustomButton
-                            text="Bắt đầu"
-                            onClick={() => handleStartChat()}
-                            backgroundColor={color.secondary}
-                            color="#000"
-                            borderRadius="unset"
-                            fontSize="20px"
-                            lineHeight="21px"
-                            padding="12px 20px"
-                        />
-                        <FontAwesomeIcon
-                            icon={faInfoCircle}
-                            color="primary"
-                            className={styles.informationIcon}
-                        />
-                    </div>
-                </div>
-            </div>
+            <HeaderChat startChat={handleStartChat} />
             <div className={styles.chatContentWrapper}>
-                <div className={styles.chatConversationWrapper}>
-                    {mockChatList.concat(mockChatList.concat(mockChatList.concat(mockChatList))).map((chatDetail, index) => (
-                        <ChatDetail
-                            key={index}
-                            text={chatDetail.text}
-                            shouldAlignLeft={chatDetail.sender === 'a'}
-                        />
-                    ))}
-                </div>
-                <div className={styles.chatActionWrapper}>
-                    <div className={styles.chatActionContainer}>
-                        <TextField
-                            variant="outlined"
-                            className={styles.messageContainer}
-                            fullWidth
-                            placeholder="Soạn tin nhắn"
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                        />
-                        <div className={styles.sendMessageWrapper}>
-                            <FontAwesomeIcon icon={faPaperPlane} color="black" />
-                        </div>
+                {isFinding ? (
+                    <div className={styles.loaderWrapper}>
+                        <CircularProgress color="primary" />
                     </div>
-                </div>
+                ) : (
+                    <>
+                        <ConversationList messages={messages} user={user} />
+                        <MessageField
+                            sendMessage={handleSendMessage}
+                            message={message}
+                            setMessage={setMessage}
+                        />
+                    </>
+                )}
             </div>
+            {shouldOpenFilter && <FilterDialog submitFilter={onSubmitFilter} />}
             {/* <div>Receiver</div>
             <input value={receiver} onChange={(e) => setReceiver(e.target.value)} />
             <div style={{ margin: '4px' }}>Sender</div>
