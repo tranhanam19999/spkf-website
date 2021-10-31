@@ -64,7 +64,7 @@
 
 .error {
     color: var(--error-color);
-    font-size: 18px;
+    font-size: 13px;
     padding-top: 5px;
     padding-left: 5px;
 }

@@ -16,7 +16,6 @@ export async function getServerSideProps(ctx) {
 }
 
 const renderPost = (props) => {
-    console.log('propsfromclient ', props);
     return <a>Post</a>;
 };
 
