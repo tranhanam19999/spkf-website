@@ -1,6 +1,6 @@
 import { CircularProgress } from '@material-ui/core';
 import router from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { notify } from 'utils/notify';
 import { handleConnectSocket } from 'utils/socket';
@@ -21,10 +21,28 @@ export const ChatContainer = () => {
     const [shouldOpenFilter, setShouldOpenFilter] = useState(true);
     const [filterOptions, setFilterOptions] = useState({});
 
+    useEffect(() => {
+        if (Object.keys(socket).length !== 0) {
+            socket.on('receive_text', ({ receiver, sender, text }) => {
+                console.log('aaaaa ', receiver, sender, text, messages);
+                ////
+                // if (sender === receiver) {
+                const newMessage = {
+                    text: text,
+                    receiver: receiver,
+                    sender: sender,
+                };
+
+                setMessages((currentMessages) => [...currentMessages, newMessage]);
+                // }
+            });
+        }
+    }, [socket]);
+
     const openEvents = (socket) => {
         socket.on('matched', ({ partner, partner_socketId }) => {
             console.log(`${user.username} đã match với `, partner);
-            setReceiver(partner)
+            setReceiver(partner);
             socket.emit('open_room', {
                 receiver: partner,
                 sender: user.username,
@@ -34,25 +52,11 @@ export const ChatContainer = () => {
         socket.on('open_room_success', ({ status, roomId }) => {
             if (status === 'OK') {
                 console.log('open room success nha ', roomId);
-                setIsFinding(false)
+                setIsFinding(false);
                 setRoomId(roomId);
             } else {
                 console.log('Failed!');
             }
-        });
-
-        socket.on('receive_text', ({ receiver, sender, text }) => {
-            console.log('aaaaa ', receiver, sender, text);
-            ////
-            // if (sender === receiver) {
-            const newMessage = {
-                text: text,
-                receiver: user.username,
-                sender: sender
-            }
-
-            setMessages([...messages, newMessage]);
-            // }
         });
 
         socket.once('connect', () => {
@@ -73,6 +77,13 @@ export const ChatContainer = () => {
     };
 
     const handleSendMessage = () => {
+        const newMessage = {
+            text: message,
+            receiver: receiver,
+            sender: user.username,
+        };
+
+        setMessages((currentMessages) => [...currentMessages, newMessage]);
         socket.emit('send_text', { receiver: receiver, sender: user.username, text: message });
     };
 

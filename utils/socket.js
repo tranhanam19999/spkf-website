@@ -1,6 +1,6 @@
 import SocketIOClient from 'socket.io-client';
-const PREFIX = 'https://spkf-api.herokuapp.com'
-
+const PREFIX = 'http://192.168.1.36:4000'
+// https://spkf-api.herokuapp.com
 export const handleConnectSocket = () => {
     fetch(`${PREFIX}/chat`, {
         method: 'GET',

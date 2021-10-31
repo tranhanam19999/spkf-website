@@ -33,7 +33,7 @@ export const ConversationList = (props) => {
                     <ChatDetail
                         key={index}
                         text={message.text}
-                        shouldAlignLeft={message.sender === user.username}
+                        shouldAlignRight={message.sender === user.username}
                     />
                 ))}
         </div>

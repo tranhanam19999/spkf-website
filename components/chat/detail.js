@@ -1,11 +1,11 @@
 import styles from './chat.module.css'
 
 export const ChatDetail = (props) => {
-    const { text, shouldAlignLeft } = props
+    const { text, shouldAlignRight, key } = props
 
     return (
-        <div className={styles.chatDetailWrapper}>
-            <div className={`${styles.chatDetailContainer} ${shouldAlignLeft ? styles.alignLeft : styles.alignRight}`}>
+        <div className={styles.chatDetailWrapper} key={key}>
+            <div className={`${styles.chatDetailContainer} ${shouldAlignRight ? styles.alignRight : styles.alignLeft}`}>
                 <span className={styles.textDetail}>
                     {text}
                 </span>
