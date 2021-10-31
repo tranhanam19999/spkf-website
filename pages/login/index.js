@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import * as styles from '../login/Login.module.css';
 import { Button } from '@material-ui/core';
 import {useDispatch, useSelector} from 'react-redux'
-import {loginUser} from '../../store/user/userSlice';
+import {loginUser, registerUser} from '../../store/user/userSlice';
 
 export const LoginPage = () => {
     const router = useRouter()
@@ -19,10 +19,10 @@ export const LoginPage = () => {
         // router.push('/home')
     };
 
-    const registerForm = useForm();
+    const registerForm = useForm({reValidateMode: "onSubmit"});
     const register = (values) => {
         console.log("register",{...values});
-        
+        dispatch(registerUser(values.name, values.email, values.username, values.password));
     }
     
     useEffect(() => {
@@ -38,7 +38,6 @@ export const LoginPage = () => {
             <div>
                 <div className={`${isRegister ? styles.hidden : ''}`}>
                     <div className={styles.title}>Log In</div>
-                    <div className={styles.description}>Hello there, Log In</div>
                     <form id="login-form" onSubmit={loginForm.handleSubmit(submitForm)} >
                         <input
                             className={styles.input}
@@ -61,25 +60,30 @@ export const LoginPage = () => {
                 </div>
 
                 <div className={`${!isRegister ? styles.hidden : ''}`}>
-                    <div className={styles.title}>Log In</div>
-                    <div className={styles.description}>Hello there, Log In</div>
+                    <div className={styles.title}>Sign up</div>
                     <form id="register-form" onSubmit={registerForm.handleSubmit(register)} >
                         <input
                             className={styles.input}
                             name="name"
-                            placeholder="Enter your name"
+                            placeholder="Enter your full name"
                             {...registerForm.register('name'
-                                // ,{ required: true, minLength: 8 }
+                                ,{ required: true, minLength: 5 }
                             )}
                         />
-                        {/* <a className = {styles.error}>
-                            {registerForm.formState.errors.name?.type === "required" ? "Chưa nhập tên" : registerForm.formState.errors.name ?  "Độ dài lớn hơn 8" : ""}
-                        </a> */}
+                        <a className = { registerForm.formState.errors.name ? styles.error : styles.hidden }>
+                            {registerForm.formState.errors.name?.type === "required" ? "Chưa nhập tên" : registerForm.formState.errors.name ?  "Độ dài lớn hơn 5" : ""}
+                        </a>
                         <input
                             className={styles.input}
                             name="email"
                             placeholder="Enter email"
                             {...registerForm.register("email")}
+                        />
+                         <input
+                            className={styles.input}
+                            name="username"
+                            placeholder="Enter username"
+                            {...registerForm.register("username")}
                         />
                         <input
                             type="password"

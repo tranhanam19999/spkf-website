@@ -5,16 +5,21 @@ import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { Layout } from '../components/layout';
 import '../styles/globals.css';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist'
 
 const MOBILE = /Android|BlackBerry|iPhone|iPod|Opera Mini|IEMobile|WPDesktop/i;
 function MyApp({ Component, pageProps, reduxStore }) {
     const { isMobile } = pageProps;
+    const persistor = persistStore(reduxStore)
 
     return (
         <Provider store={reduxStore}>
-            <Layout isMobile={isMobile}>
-                <Component {...pageProps} />
-            </Layout>
+            <PersistGate loading={null} persistor={persistor}>
+                <Layout isMobile={isMobile}>
+                    <Component {...pageProps} />
+                </Layout>
+            </PersistGate>
         </Provider>
     );
 }
