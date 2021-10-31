@@ -4,6 +4,12 @@
     position: relative;
 }
 
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+}
+
 .headerImage.headerImage.headerImage {
     object-fit: contain;
     width: 100% ;
@@ -30,7 +36,7 @@
 }
 
 .bodyWapper {
-    padding: 30px 50px 50px 50px;
+    padding: 30px 15% 50px 15%;
 }
 
 .trendingTitleWapper {
@@ -57,7 +63,7 @@
     overflow: auto;
 }
 
-.cardNewsWapper {
+.cardNewsWapper.cardNewsWapper.cardNewsWapper {
     padding: 4px
 }
 
