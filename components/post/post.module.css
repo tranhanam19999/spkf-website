@@ -37,6 +37,29 @@
     font-weight: bold;
 }
 
+.containerTitleCard {
+    /* min-height: 78px;
+    cursor: pointer; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* background-color: var(--alto-color); */
+    padding: 10px;
+}
+
+.wapperTitleCard {
+    min-height: 57px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--alto-color);
+    /* margin: 10px; */
+}
+
+.wapperTitleCard:hover {
+    background-color: var(--silver-color);
+}
+
 .wapper {
     min-height: 78px;
     cursor: pointer;
@@ -70,6 +93,7 @@
     display: table-cell;
     width: 50px;
     padding: 0 10px 0 10px;
+    align-self: center;
 }
 
 .imageCircle {

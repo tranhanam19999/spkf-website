@@ -1,0 +1,52 @@
+.wapper.wapper.wapper {
+    padding: 10px 15% 20px 15%;
+    background-color: var(--concrete-color);
+    position: relative;
+}
+
+.btnCreate {
+    position: absolute;
+    right: 15%;
+    top: 10px;
+}
+
+.cardWapper.cardWapper.cardWapper {
+    padding: 20px 0px 0 0;
+    padding-left: 0px;
+}
+
+.rightBox {
+    padding-top: 20px;
+    padding-left: 8px;
+}
+
+.headerCardWapper {
+    height: 52px;
+    color: var(--black-color);
+    padding: 0px 0 0px 22px;
+    display: flex;
+    background-color: var(--silver-color);
+    flex-direction: column;
+    justify-content: center;
+}
+
+.titleCard {
+    font-size: 18px;
+    font-weight: 600;
+    line-height:28px;
+    width: 100%;
+}
+
+.textTimeView {
+    font-size: var(--font-size-small);
+    font-weight: 200;
+    color: var(--gray-color);
+    line-height: var(--font-size-medium);
+    font-weight: bold;
+}
+
+.postDetailContainer {
+    width: 100%;
+    background-color: var(--alto-color);
+}
+

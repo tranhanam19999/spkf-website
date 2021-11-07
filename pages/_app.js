@@ -9,6 +9,8 @@ import { Layout } from '../components/layout';
 import withReduxStore from '../lib/with-redux-store';
 import '../styles/globals.css';
 import { MOBILE } from 'utils';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist'
 
 export const theme = createTheme({
     palette: {
@@ -24,23 +26,25 @@ export const theme = createTheme({
         },
     },
 });
-
 function MyApp({ Component, pageProps, reduxStore }) {
+    const persistor = persistStore(reduxStore)
     return (
         <Provider store={reduxStore}>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Layout isMobile={pageProps.isMobile}>
-                    <Component {...pageProps} />
-                    <ToastContainer
-                        limit={2}
-                        pauseOnHover={false}
-                        hideProgressBar
-                        autoClose={2000}
-                        closeOnClick
-                    />
-                </Layout>
-            </ThemeProvider>
+            <PersistGate loading={null} persistor={persistor}>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Layout isMobile={pageProps.isMobile}>
+                        <Component {...pageProps} />
+                        <ToastContainer
+                            limit={2}
+                            pauseOnHover={false}
+                            hideProgressBar
+                            autoClose={2000}
+                            closeOnClick
+                        />
+                    </Layout>
+                </ThemeProvider>
+            </PersistGate>
         </Provider>
     );
 }

@@ -1,53 +1,68 @@
 import { MyCardHeader } from '../../../components/card';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
-import { Grid, Typography, TextField, makeStyles, Box } from '@material-ui/core';
-import Image from 'next/image';
+import { Grid} from '@material-ui/core';
 import styles from './category.module.css';
-import { CardPost } from '../../../components/post';
-import { RightBox } from '../../../components/category';
+import { Category } from '../../../components/category';
+import { TitleCard } from '../../../components/post/titleCard';
+import { Breadcrumb } from '../../../components/breadcrumb';
+import { useRouter } from 'next/router';
+import { CustomButton } from '../../../components/button';
 
 export const RenderCategoryDesktop = (props) => {
-    const items = [1, 2, 3, 4, 5];
+    const router = useRouter();
+
+    const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
     const category = [items, items, items, items];
     const post = {
         author: 'Nam Trần',
-        createTime: 1519129853500,
+        createTime: "2021-09-04T09:35:29.528Z",
         title: ' Sinh viên ute Trần Hà Nam tham gia clc be dancer',
     };
 
+    const handleCreatePost = () => {
+        console.log("Create post")
+    }
+
+    const handleRedirectPost = () => {
+        router.push({
+            pathname: '/post/detail',
+        });
+    }
+
     return (
-        <Grid container className={styles.wapper}>
-            <Grid item container md={8} xs={12} className={styles.cardWapper}>
-                {category.map((cate, index) => {
-                    return (
-                        <Grid item xs={12} key={index} className={styles.cardContainer}>
-                            <MyCardHeader title="Đại sảnh" />
-                            {cate.map((item, index) => {
+        <div  className={styles.wapper}>
+            <Breadcrumb route={router.asPath} detailEndpoint="Học tập"/>
+            <div className={styles.btnCreate}>
+                <CustomButton text="Tạo bài viết &#43;" styleNomal={true} onClick={handleCreatePost}/>
+            </div>
+            <Grid container>
+                <Grid item container md={8} xs={12} className={styles.cardWapper}>
+                    <Grid item container xs={12} className={styles.cardContainer}>
+                        <MyCardHeader title="Học tập" />
+                        <Grid item container xs={12} className={styles.listCateWapper}>
+                            {items.map((item, index) => {
                                 return (
-                                    <CardPost
-                                        icon={
-                                            <FontAwesomeIcon
-                                                icon={faComment}
-                                                color="#86adc1"
-                                                size="sm"
-                                            />
-                                        }
-                                        titleCard="Thông báo"
-                                        post={post}
-                                        index={index}
-                                    />
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        key={index}
+                                        className={styles.cardNewsWapper}
+                                        onClick={() => handleRedirectPost()}
+                                    >
+                                        <TitleCard post={post} isCate={true} />
+                                    </Grid>
                                 );
                             })}
                         </Grid>
-                    );
-                })}
-            </Grid>
-            <Grid item md={4} container className={styles.rightBox}>
-                <Grid item xs={12} className={styles.categoryWapper}>
-                    <RightBox />
+                    </Grid>
+                    {/* );
+                })} */}
+                </Grid>
+                <Grid item md={4} container className={styles.rightBox}>
+                    <Grid item xs={12} className={styles.categoryWapper}>
+                        <Category isCate={true} />
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </div>
     );
 };
