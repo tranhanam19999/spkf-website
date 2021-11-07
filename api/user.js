@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
-const host = 'https://spkf-api.herokuapp.com/auth'
+// const host = 'https://spkf-api.herokuapp.com/auth'
+const host = 'http://192.168.1.36:4000/auth'
 
 export const registerApi = (name, username, password) => {
     axios.post(`${host}/sign-up`, {

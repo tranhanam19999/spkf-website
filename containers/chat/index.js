@@ -1,32 +1,66 @@
 import { CircularProgress } from '@material-ui/core';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { notify } from 'utils/notify';
-import { handleConnectSocket } from 'utils/socket';
 import styles from './chat.module.css';
 import { ConversationList } from './conversation';
 import { FilterDialog } from './filter-dialog';
 import { HeaderChat } from './header';
 import { MessageField } from './message-field';
+import * as socketConnection from 'utils/socket';
 
 export const ChatContainer = () => {
     const { user } = useSelector((state) => state.user);
+    const router = useRouter()
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [receiver, setReceiver] = useState('');
-    const [socket, setSocket] = useState({});
     const [roomId, setRoomId] = useState('');
     const [isFinding, setIsFinding] = useState(false);
     const [shouldOpenFilter, setShouldOpenFilter] = useState(true);
     const [filterOptions, setFilterOptions] = useState({});
 
-    useEffect(() => {
-        if (Object.keys(socket).length !== 0) {
-            socket.on('receive_text', ({ receiver, sender, text }) => {
-                console.log('aaaaa ', receiver, sender, text, messages);
-                ////
-                // if (sender === receiver) {
+    const disconnectAllEvents = () => {
+        socketConnection.removeEventListener({
+            type: 'receive_text',
+            callback: () => {
+                console.log('receive_text disconnected');
+            },
+        });
+        socketConnection.removeEventListener({
+            type: 'matched',
+            callback: () => {
+                console.log('matched disconnected');
+            },
+        });
+        socketConnection.removeEventListener({
+            type: 'open_room_success',
+            callback: () => {
+                console.log('open_room_success disconnected');
+            },
+        });
+        socketConnection.removeEventListener({
+            type: 'connect',
+            callback: () => {
+                console.log('connect disconnected');
+            },
+        });
+        socketConnection.removeEventListener({
+            type: 'find_partner_pending',
+            callback: () => {
+                console.log('find_partner_pending disconnected');
+            },
+        });
+
+        socketConnection.socket.removeAllListeners();
+        socketConnection.socket.offAny();
+    };
+
+    const openEvents = () => {
+        socketConnection.addEventListener({
+            type: 'receive_text',
+            callback: ({ receiver, sender, text }) => {
                 const newMessage = {
                     text: text,
                     receiver: receiver,
@@ -34,45 +68,66 @@ export const ChatContainer = () => {
                 };
 
                 setMessages((currentMessages) => [...currentMessages, newMessage]);
-                // }
-            });
-        }
-    }, [socket]);
-
-    const openEvents = (socket) => {
-        socket.on('matched', ({ partner, partner_socketId }) => {
-            console.log(`${user.username} đã match với `, partner);
-            setReceiver(partner);
-            socket.emit('open_room', {
-                receiver: partner,
-                sender: user.username,
-            });
+            },
         });
 
-        socket.on('open_room_success', ({ status, roomId }) => {
-            if (status === 'OK') {
-                console.log('open room success nha ', roomId);
-                setIsFinding(false);
-                setRoomId(roomId);
-            } else {
-                console.log('Failed!');
-            }
+        socketConnection.addEventListener({
+            type: 'matched',
+            callback: ({ partner }) => {
+                console.log(`${user.username} đã match với `, partner);
+                setReceiver(partner);
+                socketConnection.sendEvent({
+                    type: 'open_room',
+                    data: {
+                        receiver: partner,
+                        sender: user.username,
+                    },
+                });
+            },
         });
 
-        socket.once('connect', () => {
-            socket.emit('find_partner', {
-                gender: filterOptions.gender,
-                age: {
-                    from: filterOptions.fromAge,
-                    to: filterOptions.toAge,
-                },
-                source: user.username,
-                socketId: socket.id,
-            });
+        socketConnection.addEventListener({
+            type: 'open_room_success',
+            callback: ({ status, roomId }) => {
+                if (status === 'OK') {
+                    setIsFinding(false);
+                    setRoomId(roomId);
+                } else {
+                    console.log('Failed!');
+                }
+            },
         });
 
-        socket.on('find_partner_pending', () => {
-            setIsFinding(true);
+        socketConnection.addEventListener({
+            type: 'connect',
+            callback: () => {
+                socketConnection.sendEvent({
+                    type: 'find_partner',
+                    data: {
+                        gender: filterOptions.gender,
+                        age: {
+                            from: filterOptions.fromAge,
+                            to: filterOptions.toAge,
+                        },
+                        source: user.username,
+                        socketId: socketConnection.socket.id,
+                    },
+                });
+            },
+        });
+
+        socketConnection.addEventListener({
+            type: 'find_partner_pending',
+            callback: () => {
+                setIsFinding(true);
+            },
+        });
+
+        socketConnection.addEventListener({
+            type: 'disconnect',
+            callback: () => {
+                disconnectAllEvents();
+            },
         });
     };
 
@@ -84,7 +139,14 @@ export const ChatContainer = () => {
         };
 
         setMessages((currentMessages) => [...currentMessages, newMessage]);
-        socket.emit('send_text', { receiver: receiver, sender: user.username, text: message });
+        socketConnection.sendEvent({
+            type: 'send_text',
+            data: {
+                receiver: receiver,
+                sender: user.username,
+                text: message,
+            },
+        });
     };
 
     const onSubmitFilter = (mode, data) => {
@@ -97,13 +159,12 @@ export const ChatContainer = () => {
     };
 
     const handleStartChat = () => {
-        const socketIO = handleConnectSocket();
-        if (!socketIO) {
+        if (!socketConnection) {
             notify.error('Có lỗi khi kết nối');
             router.reload();
         } else {
-            setSocket(socketIO);
-            openEvents(socketIO);
+            disconnectAllEvents();
+            openEvents();
         }
     };
 
@@ -127,24 +188,6 @@ export const ChatContainer = () => {
                 )}
             </div>
             {shouldOpenFilter && <FilterDialog submitFilter={onSubmitFilter} />}
-            {/* <div>Receiver</div>
-            <input value={receiver} onChange={(e) => setReceiver(e.target.value)} />
-            <div style={{ margin: '4px' }}>Sender</div>
-            <input value={sender} onChange={(e) => setSender(e.target.value)} />
-            <div></div>
-            <input value={text} onChange={(e) => setText(e.target.value)} />
-            <button onClick={() => handleSendMessage()} style={{ marginTop: '4px' }}>
-                Send
-            </button>
-            <button onClick={() => joinRoom()} style={{ marginTop: '4px' }}>
-                Join room
-            </button>
-
-            <div style={{ marginTop: '12px' }}>
-                {messageReceived.map((message) => {
-                    return <p>{message.sender + '----' +message.text}</p>;
-                })}
-            </div> */}
         </>
     );
 };
