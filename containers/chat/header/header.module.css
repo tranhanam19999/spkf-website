@@ -1,0 +1,33 @@
+.headerChatWrapper {
+    width: 100%;
+    background-color: var(--silver-color);
+}
+
+.headerChatContainer {
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerChatTitle {
+    font-style: normal;
+    font-weight: 550;
+    font-size: 28px;
+    line-height: 28px;
+
+    color: #000000;
+}
+
+.otherInfosHeaderWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.otherInfosHeaderWrapper > div {
+    margin-right: 24px;
+}
+
+.informationIcon {
+    height: 24px;
+}

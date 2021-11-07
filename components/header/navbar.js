@@ -103,7 +103,7 @@ export const NavBar = () => {
                     <Grid container xs={4} justifyContent="flex-end" alignItems="center">
                         <Grid item xs={5} className={styles.btnWapper}>
                             <Button onClick={() => handleRedirect()}>
-                                {user ? 'Đăng xuẩt' : 'Đăng nhập'}
+                                {user ? `Hello ${user.username}, Đăng xuẩt` : 'Đăng nhập'}
                             </Button>
                         </Grid>
                         {/* <Grid item xs={6}>
