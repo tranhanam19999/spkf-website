@@ -65,7 +65,7 @@ export const CustomButton = (props) => {
                     </Button>
                 </Badge>
             ) : (
-                <Button onClick={onClick} className={styleNomal ? styles.nomal : styles.classes.button}>
+                <Button onClick={onClick} className={styleNomal ? styles.nomal : classes.button}>
                     {text}
                 </Button>
             )}
