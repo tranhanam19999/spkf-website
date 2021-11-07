@@ -1,97 +1,12 @@
-.headerChatWrapper {
-    width: 100%;
-    background-color: var(--silver-color);
-}
-
-.headerChatContainer {
-    padding: 20px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.headerChatTitle {
-    font-style: normal;
-    font-weight: 550;
-    font-size: 28px;
-    line-height: 28px;
-
-    color: #000000;
-}
-
-.otherInfosHeaderWrapper {
-    display: flex;
-    align-items: center;
-}
-
-.otherInfosHeaderWrapper > div {
-    margin-right: 24px;
-}
-
-.informationIcon {
-    height: 24px;
-}
-
 .chatContentWrapper {
-    height: calc(100vh - 76px - 40px - 64px - 8px);
+    height: calc(100vh - 76px - 32px - 64px);
     border: 1px solid rgba(0, 0, 0, 0.3);
-}
-
-.chatConversationWrapper {
-    overflow-y: auto;
-    height: calc(100vh - 76px - 40px - 64px - 8px - 83px);
-}
-
-.chatConversationWrapper {
-    padding: 20px 32px;
-}
-
-.chatConversationWrapper > div:last-child {
-    margin-bottom: 0px;
 }
 
 .startChatWrapper {
     margin-top: 8px;
 }
 
-.sendMessageWrapper {
-    cursor: pointer;
-    margin-left: 32px;
-}
+.loaderWrapper {
 
-.sendMessageWrapper > svg {
-    height: 28px;
-}
-
-.messageContainer > div::before,
-.messageContainer > div::after {
-    content: unset;
-    border: unset;
-}
-
-.messageContainer > div > fieldset {
-    display: none;
-}
-
-.messageContainer > div {
-    background-color: #c4c4c4;
-}
-
-.messageContainer > div > input {
-    padding: 12px 16px;
-}
-
-.chatActionWrapper {
-    width: calc(100% - 40px);
-    position: absolute;
-    bottom: 20px;
-    background-color: #e2e2e2;
-}
-
-.chatActionContainer {
-    padding: 20px 32px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }

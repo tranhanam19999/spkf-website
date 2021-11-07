@@ -1,0 +1,16 @@
+.genderSelectWrapper {
+    display: block;
+    margin-top: 4px;
+}
+
+.genderSelectContainer {
+    background: #C0C0C0
+}
+
+.genderSelectContainer > div {
+    padding: 8px;
+}
+
+div.genderSelectContainer::before, div.genderSelectContainer::after {
+    content: none;
+}
