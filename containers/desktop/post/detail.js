@@ -12,7 +12,9 @@ export const PostDetailDesktop = (props) => {
     const router = useRouter();
 
     const handleCreatePost = () => {
-        console.log('Create post');
+        router.push({
+            pathname:'/posts/create',
+        })
     };
 
     return (

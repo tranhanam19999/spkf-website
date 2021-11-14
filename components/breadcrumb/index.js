@@ -11,6 +11,7 @@ export const Breadcrumb = ({ route, detailEndpoint }) => {
                     </>
                 );
             case '/post/detail':
+            case '/post/create':
                 return (
                     <>
                         <span onClick={() => router.push('/')}> Diễn đàn </span>
