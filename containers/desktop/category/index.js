@@ -19,7 +19,9 @@ export const RenderCategoryDesktop = (props) => {
     };
 
     const handleCreatePost = () => {
-        console.log("Create post")
+        router.push({
+            pathname: '/post/create',
+        });
     }
 
     const handleRedirectPost = () => {
