@@ -21,9 +21,9 @@ const PREFIX = 'https://spkf-api.herokuapp.com'
 export let socket = undefined;
 
 function initializeSocket() {
-    // fetch(`${PREFIX}/chat`, {
-    //     method: 'GET',
-    // });
+    fetch(`${PREFIX}/chat`, {
+        method: 'GET',
+    });
 
     socket = SocketIOClient.connect(PREFIX, {
         path: '/chat',
