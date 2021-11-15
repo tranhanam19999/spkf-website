@@ -23,7 +23,6 @@ export let socket = undefined;
 function initializeSocket() {
     fetch(`${PREFIX}/chat`, {
         method: 'GET',
-        mode: 'cors'
     });
 
     socket = SocketIOClient.connect(PREFIX, {
