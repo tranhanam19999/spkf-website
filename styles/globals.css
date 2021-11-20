@@ -3,7 +3,8 @@
     --font-family-sans-serif: sans-serif;
 
     /* Main Colors */
-    --primary-color: #00b46e;
+    --primary-color: #1D6692;
+    --secondary-color: #D5DFE6;
     --success-color: #29c038;
     --error-color: #ff0000;
     --warning-color: #f2c94c;
@@ -18,7 +19,7 @@
     --catskill-white-color: #e2ebf0;
     --pink-swan-color: #bdb2b2;
     --caribbean-green-color: #00d884;
-    
+
     /* Font Sizes */
     --font-size-x-small: 10px;
     --font-size-small: 12px;

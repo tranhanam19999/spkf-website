@@ -3,7 +3,7 @@
     width: calc(100% - 32px);
     position: absolute;
     bottom: 16px;
-    background-color: #e2e2e2;
+    background-color: var(--primary-color);
 }
 
 .chatActionContainer {
@@ -18,6 +18,8 @@
 .sendMessageWrapper {
     cursor: pointer;
     margin-left: 32px;
+
+    font-size: 24px;
 }
 
 .sendMessageWrapper > svg {
@@ -36,7 +38,7 @@
 }
 
 .messageContainer > div {
-    background-color: #c4c4c4;
+    background-color: var(--secondary-color);
 }
 
 .messageContainer > div > input {

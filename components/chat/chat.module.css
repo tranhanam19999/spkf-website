@@ -17,12 +17,20 @@
 
 .alignRight {
     float: right;
+    background: var(--primary-color);
 }
 
-.textDetail {
+.textDetail, .senderTextDetail {
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 19px;
-    color: #000000;
+}
+
+.textDetail {
+    color: var(--black-color)
+}
+
+.senderTextDetail {
+    color: var(--white-color)
 }

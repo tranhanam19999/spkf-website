@@ -24,7 +24,6 @@ export const HeaderChat = (props) => {
                     />
                     <FontAwesomeIcon
                         icon={faInfoCircle}
-                        color="primary"
                         className={styles.informationIcon}
                     />
                 </div>

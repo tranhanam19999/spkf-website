@@ -3,23 +3,23 @@ import styles from './conversation.module.css'
 
 const mockChatList = [
     {
-        sender: 'a',
-        receiver: 'b',
+        sender: 'nam',
+        receiver: 'cam',
         text: 'abc123',
     },
     {
-        sender: 'b',
-        receiver: 'a',
+        sender: 'cam',
+        receiver: 'nam',
         text: '231',
     },
     {
-        sender: 'a',
-        receiver: 'b',
+        sender: 'nam',
+        receiver: 'cam',
         text: 'yoo',
     },
     {
-        sender: 'b',
-        receiver: 'a',
+        sender: 'cam',
+        receiver: 'nam',
         text: 'xzc',
     },
 ];
@@ -29,7 +29,7 @@ export const ConversationList = (props) => {
 
     return (
         <div className={styles.chatConversationWrapper}>
-            {messages.map((message, index) => (
+            {mockChatList.map((message, index) => (
                     <ChatDetail
                         key={index}
                         text={message.text}
