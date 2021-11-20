@@ -1,6 +1,6 @@
 .headerChatWrapper {
     width: 100%;
-    background-color: var(--silver-color);
+    background-color: var(--primary-color);
 }
 
 .headerChatContainer {
@@ -16,7 +16,7 @@
     font-size: 28px;
     line-height: 28px;
 
-    color: #000000;
+    color: var(--white-color)
 }
 
 .otherInfosHeaderWrapper {
@@ -29,5 +29,6 @@
 }
 
 .informationIcon {
-    height: 24px;
+    font-size: 24px;
+    color: var(--white-color)
 }

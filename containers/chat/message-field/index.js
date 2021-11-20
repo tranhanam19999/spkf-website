@@ -26,7 +26,7 @@ export const MessageField = (props) => {
                     onKeyPress={handleSendMessage}
                 />
                 <div className={styles.sendMessageWrapper} onClick={(e) => handleSendMessage(e)}>
-                    <FontAwesomeIcon icon={faPaperPlane} color="black" />
+                    <FontAwesomeIcon icon={faPaperPlane} color="#ffffff" />
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ import { persistStore } from 'redux-persist'
 export const theme = createTheme({
     palette: {
         primary: {
-            main: '#00b46e',
+            main: '#1D6692',
             dark: '#00a45e',
             contrastText: '#fff',
         },

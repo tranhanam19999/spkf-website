@@ -6,7 +6,7 @@ export const ChatDetail = (props) => {
     return (
         <div className={styles.chatDetailWrapper} key={key}>
             <div className={`${styles.chatDetailContainer} ${shouldAlignRight ? styles.alignRight : styles.alignLeft}`}>
-                <span className={styles.textDetail}>
+                <span className={shouldAlignRight ? styles.senderTextDetail : styles.textDetail}>
                     {text}
                 </span>
             </div>

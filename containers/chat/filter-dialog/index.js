@@ -39,38 +39,6 @@ export const FilterDialog = (props) => {
                             </Grid>
                             <Grid item>
                                 <AgeSlider ageRange={ageRange} setAgeRange={setAgeRange} />
-                                {/* <span>Chọn độ tuổi bạn muốn tìm kiếm</span>
-                                <div className={styles.agesFieldWrapper}>
-                                    <TextField
-                                        type="number"
-                                        value={fromAge}
-                                        onChange={(e) => setFromAge(e.target.value)}
-                                        placeholder="18"
-                                        className={styles.ageField}
-                                        variant="outlined"
-                                        inputProps={{ maxLength: 2 }}
-                                        onInput={(e) => {
-                                            e.target.value = Math.max(0, parseInt(e.target.value))
-                                                .toString()
-                                                .slice(0, 2);
-                                        }}
-                                    />
-                                    <span className={styles.ageDivider}>-</span>
-                                    <TextField
-                                        type="number"
-                                        value={toAge}
-                                        onChange={(e) => setToAge(e.target.value)}
-                                        placeholder="99"
-                                        className={styles.ageField}
-                                        variant="outlined"
-                                        inputProps={{ maxLength: 2 }}
-                                        onInput={(e) => {
-                                            e.target.value = Math.max(0, parseInt(e.target.value))
-                                                .toString()
-                                                .slice(0, 2);
-                                        }}
-                                    />
-                                </div> */}
                             </Grid>
                         </Grid>
                     </div>
