@@ -2,5 +2,5 @@
     color: var(--black-color);
     padding: 13px 0 11px 22px;
     display: flex;
-    background-color: var(--silver-color);
+    background-color: var(--primary-color);
 }

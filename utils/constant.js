@@ -6,6 +6,7 @@ export const PATH = {
 export const color = {
     primary: '#c4c4c4',
     secondary: '#ffffff',
+    buttonBackgroundColor: '#578199',
 };
 
 export const ageMarks = [

@@ -11,6 +11,7 @@ import '../styles/globals.css';
 import { MOBILE } from 'utils';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist'
+import 'react-quill/dist/quill.snow.css'
 
 export const theme = createTheme({
     palette: {
