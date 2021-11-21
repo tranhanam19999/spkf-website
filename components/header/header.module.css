@@ -103,7 +103,7 @@
 } */
 
 .btnWapper > button {
-    color: var(--black-color);
+    color: var(--white-color);
     text-transform: capitalize;
     margin: 5px;
     font-size: var(--font-size-small);
@@ -113,15 +113,17 @@
 
 .btnWapper > button:hover {
     background-color: var(--white-color);
+    color: var(--primary-color);
 }
 
 .btnWapper > button:focus {
     background-color: var(--white-color);
+    color: var(--primary-color);
 }
 
 .appBar.appBar {
-    color: var(--black-color);
-    background-color: var(--silver-color);
+    color: var(--white-color);
+    background-color: var(--primary-color);
     box-shadow: none;
 }
 

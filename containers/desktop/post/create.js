@@ -5,18 +5,14 @@ import styles from './post.module.css';
 import { Breadcrumb } from '../../../components/breadcrumb';
 import { useRouter } from 'next/router';
 import { CustomButton } from '../../../components/button';
-import { useQuill } from 'react-quilljs';
-import 'quill/dist/quill.snow.css';
+import { useState } from "react";
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import 'react-quill/dist/quill.snow.css';
 
 export const PostCreateDesktop = (props) => {
     const router = useRouter();
-
-    const { quill, quillRef } = useQuill();
-
-    useEffect(() => {
-        console.log(quill, quillRef);
-        console.log("!");
-      });
+    const [value, setValue] = useState('')
 
     return (
         <div className={styles.wapper}>
@@ -38,12 +34,12 @@ export const PostCreateDesktop = (props) => {
                         <span className={styles.textCreate}>Nội dung bài viết</span>
                     </Grid>
                     <Grid item xs={12} className={styles.quillWapper}>
-                        <div ref={quillRef} />
+                     <ReactQuill value={value} onChange={setValue} theme="snow" />
                     </Grid>
                 </Grid>
                
             </Grid>
-           
         </div>
+        
     );
 };

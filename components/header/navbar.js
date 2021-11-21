@@ -100,7 +100,7 @@ export const NavBar = () => {
                             <Button onClick={() => handleRedirect(PATH.TO_CHAT)}>Chat ngẫu nhiên</Button>
                         </Grid>
                     </Grid>
-                    <Grid container xs={4} justifyContent="flex-end" alignItems="center">
+                    <Grid container item xs={4} justifyContent="flex-end" alignItems="center">
                         <Grid item xs={5} className={styles.btnWapper}>
                             <Button onClick={() => handleRedirect()}>
                                 {user ? `Hello ${user.username}, Đăng xuẩt` : 'Đăng nhập'}
