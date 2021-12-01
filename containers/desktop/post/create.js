@@ -11,7 +11,6 @@ const ReactQuill = dynamic(() => import('react-quill'), {
     ssr: false,
     loading: () => <p>Loading ...</p>,
 });
-import 'react-quill/dist/quill.snow.css';
 
 const modules = {
     toolbar: [
@@ -106,7 +105,7 @@ export const PostCreateDesktop = (props) => {
                         />
                     </div>
                     </Grid>
-                    <div dangerouslySetInnerHTML={{ __html: contern }} />
+                    {/* <div dangerouslySetInnerHTML={{ __html: contern }} /> */}
                 </Grid>
             </Grid>
         </div>
