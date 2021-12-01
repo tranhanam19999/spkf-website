@@ -69,4 +69,11 @@ MyApp.getInitialProps = async (appContext) => {
     };
 };
 
+
+function getCookie(cookie) {
+    const value = cookie;
+    const parts = value.split(`session_token=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 export default withReduxStore(MyApp);

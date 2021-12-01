@@ -20,12 +20,12 @@ export const TitleCard = ({ post, isCate }) => {
                         </div> */}
                         <span className={`${styles.textTitle}`}>{post.title}</span>
                         <span className={`${styles.textTimeView}`}>
-                            {post.createTime
+                            {post.createdTime
                                 ? convertISOToDate(
-                                    moment(post.createTime).utcOffset('+0700')
+                                    moment(post.createdTime).utcOffset('+0700')
                                 , true)
                                 : '  '}
-                            {` -  Đăng bởi ${ post.author }`}
+                            {` -  Đăng bởi ${ post.userInfo.fullName }`}
                         </span>
                     </div>
                 </div>

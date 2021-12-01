@@ -20,6 +20,5 @@ const renderPost = (props) => {
 };
 
 export default function Post(props) {
-    console.log('propshome', props);
     return renderPost(props);
 }

@@ -25,18 +25,33 @@ const slice = createSlice({
             state.user = null;
             state.token = null;
         },
+        setInfoAction: (state, action) => {
+            console.log("action", action.payload)
+            state.user = {
+                fullName: action.payload.fullName,
+                email: action.payload.email,
+                username: action.payload.username,
+                userId: action.payload.userId,
+            };
+        }
     },
 });
 
 export default slice.reducer;
-const { registerAction, loginAction, logoutAction } = slice.actions;
+const { registerAction, loginAction, logoutAction, setInfoAction } = slice.actions;
+
+export const setInfoUser = (userInfo) => async (dispatch) => {
+    const { email, fullName, userId, username } = userInfo;
+    if (email && fullName && userId && username) {
+        dispatch(setInfoAction(userInfo))
+    }
+}
 
 export const registerUser = (fullName, email, username, password) => async (dispatch) => {
     if (username === '' || password === '' || fullName === '' || email ==='')
         return alert('username, password, email or name none');
     try {
         const res = await registerApi(fullName, email, username, password);
-        console.log("res", res)
         if (res.data) {
             if (res.data.code === 200) dispatch(registerAction(res.data));
             else return alert('username or email was exist');

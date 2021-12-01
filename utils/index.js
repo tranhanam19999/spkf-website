@@ -44,3 +44,9 @@ export function convertISOToDate(date, takeDMYOnly) {
 
     return `${dt}/${month}/${year} ${hour}:${min}`;
 }
+
+export const getCookie = (cookie) => {
+    const value = cookie;
+    const parts = value.split(`token=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
