@@ -1,0 +1,88 @@
+.loginContainer {
+    background: var(--alto-color);
+    /* background: rgba(0, 0, 0, 0.53); */
+    padding: 40px 100px;
+    box-shadow: 0px 50px 30px -30px rgb(0 0 0 / 30%);
+    margin-bottom: 50px;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    -webkit-transform-origin: top left;
+    transform-origin: top left;
+    -webkit-text-size-adjust: 100%;
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    width: 40%;
+    height: fit-content;
+}
+
+.title {
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ff7361;
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.description {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.loginWapper {
+    margin-top: 30%;
+}
+
+.input {
+    padding: 10px 20px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#button,
+.rerun-button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 3px;
+    background: #ff7361;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+}
+
+.error {
+    color: var(--error-color);
+    font-size: 18px;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.btnRegister {
+    color: var(--black-color);
+    font-size: 18px;
+    text-align: center;
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+.buttonWapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
