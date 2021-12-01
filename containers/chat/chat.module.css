@@ -1,0 +1,12 @@
+.chatContentWrapper {
+    height: calc(100vh - 76px - 32px - 64px);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.startChatWrapper {
+    margin-top: 8px;
+}
+
+.loaderWrapper {
+
+}

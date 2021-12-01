@@ -3,23 +3,26 @@ import { convertISOToDate } from '../../utils';
 import styles from './post.module.css';
 
 export const TrendingCard = ({ post }) => {
+
+    console.log("post",post)
+
     return (
         <>
             {post ? (
                 <div className={styles.wapper}>
                     <div className={styles.categoryNameWapper}>
-                        <span className={`${styles.textName}`}>{post.author}</span>
+                        <span className={`${styles.textName}`}>{post.userInfo.fullName}</span>
                         <span className={`${styles.textNormal}`}> đã đăng trong </span>
-                        <span className={`${styles.textName}`}>{post.category}</span>
+                        <span className={`${styles.textName}`}>{post.cateInfo.name ? post.cateInfo.name : 'Chung' }</span>
                     </div>
                     <span className={`${styles.textTitle}`}>{post.title}</span>
                     <span className={`${styles.textTimeView}`}>
-                        {post.createTime
+                        {post.createdTime
                             ? convertISOToDate(
-                                  moment(post.createTime).utcOffset('+0700')
+                                  moment(post.createdTime).utcOffset('+0700')
                               , true)
                             : ''}
-                        {` - ${ post.totalViews } Views`}
+                        { post.totalViews && ` - ${ post.totalViews } Views`}
                     </span>
                 </div>
             ) : (

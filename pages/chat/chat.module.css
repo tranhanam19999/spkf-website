@@ -1,4 +1,6 @@
 .chatContainerWrapper {
-    padding: 20px;
+    padding: 16px;
     background-color: #fff;
+
+    position: relative;
 }

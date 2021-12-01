@@ -1,4 +1,5 @@
 import { makeStyles, Button, Badge } from '@material-ui/core';
+import styles from './button.module.css';
 
 const useStyles = makeStyles({
     button: (styledObj) => ({
@@ -34,6 +35,7 @@ export const CustomButton = (props) => {
         borderRadius: '16px',
         fontStyle: 'normal',
         fontSize: '12px',
+        fontWeight: '500',
         lineHeight: '16px',
         width: 'auto',
         color: '#fff',
@@ -49,7 +51,7 @@ export const CustomButton = (props) => {
         });
     };
 
-    const { badgeNumber, text, onClick } = props;
+    const { badgeNumber, text, onClick, styleNomal } = props;
 
     customizeStyle(props)
     const classes = useStyles(buttonStyle);
@@ -63,7 +65,7 @@ export const CustomButton = (props) => {
                     </Button>
                 </Badge>
             ) : (
-                <Button onClick={onClick} className={classes.button}>
+                <Button onClick={onClick} className={styleNomal ? styles.nomal : classes.button}>
                     {text}
                 </Button>
             )}

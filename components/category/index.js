@@ -5,6 +5,7 @@ import { Grid, Typography, TextField, makeStyles, Box } from '@material-ui/core'
 import Image from 'next/image';
 import styles from './category.module.css';
 import { useRouter } from 'next/router';
+import { CategoryCard } from './card';
 
 export const RightBox = () => {
     const router = useRouter();
@@ -46,3 +47,52 @@ export const RightBox = () => {
         </>
     );
 };
+
+export const Category = ({isCate, listCategory}) => {
+
+    const router = useRouter();
+
+    const redirectCategory = () => {
+        router.push({
+            pathname: '/category',
+        });
+    };
+
+    const category = listCategory || [
+        { name: 'Nội quy diễn đàn' },
+        { name: 'Thông tin hot' },
+        { name: 'Học tập' },
+        { name: 'Việc làm & nhà trọ' },
+        { name: 'Trao đổi & mua bán' },
+        { name: 'Công nghệ & kĩ thuật' },
+        { name: 'Kết bạn bốn phương' },
+        { name: 'Tư vấn sinh viên' },
+        { name: 'Cuộc thi' },
+        { name: 'Review Môn học' },
+        { name: 'Thể thao' },
+        { name: 'Chia sẻ' },
+    ];
+
+    return (
+        <>
+            <Grid item xs={12}>
+                <MyCardHeader title="Chủ đề" />
+            </Grid>
+            <Grid item container xs={12} className={isCate ? styles.listCateWapper : styles.listCart}>
+                {category.map((item, index) => {
+                    return (
+                        <Grid
+                            item
+                            key={index}
+                            xs={12}
+                            className={styles.cardNewsWapper}
+                            onClick={() => redirectCategory()}
+                        >
+                            <CategoryCard cate={item} />
+                        </Grid>
+                    );
+                })}
+            </Grid>
+        </>
+    )
+}

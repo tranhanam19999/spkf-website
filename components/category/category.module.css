@@ -25,3 +25,75 @@
     background-color: var(--coral-color);
     color: var(--black-color)
 }
+
+.imgWapper {
+    width: 48px;
+    padding: 0 10px 0 10px;
+    align-self: center;
+}
+
+.imageCircle {
+    border-radius: 50%;
+    height: 48px;
+    width: 48px;
+}
+
+.titleWapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 10px;
+
+}
+
+.cardWapper {
+    display: flex;
+    min-height: 65px;
+    justify-content: space-between;
+    background-color: var(--geyser-color);
+    cursor: pointer;
+}
+
+.cardWapper:hover {
+    background-color: var(--casper-color);
+}
+
+.categoryCardTitle {
+    font-size: var(--font-size-medium);
+    font-weight: 200;
+    line-height: var(--font-size-x-large);
+    font-weight: bold;
+
+    padding-bottom: 5px;
+
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+}
+
+.textTimeView {
+    font-size: var(--font-size-small);
+    font-weight: 200;
+    color: var(--gray-color);
+    line-height: var(--font-size-medium);
+    font-weight: bold;
+}
+
+
+.listCart.listCart.listCart {
+    padding: 0;
+    max-height: 318px;
+    overflow: auto;
+}
+
+.listCateWapper.listCateWapper.listCateWapper {
+    padding: 0;
+    max-height: 438px;
+    overflow: auto;
+}
+
+.cardNewsWapper.cardNewsWapper.cardNewsWapper {
+    padding: 4px
+}

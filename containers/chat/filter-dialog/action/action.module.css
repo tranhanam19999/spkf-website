@@ -1,0 +1,21 @@
+.dialogActionWrapper {
+    margin-top: 12px;
+}
+
+.dialogActionContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dialogActionContainer > button {
+    margin-left: 16px;
+    padding: 12px 36px;
+
+    border: 2px solid black;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    /* identical to box height */
+
+    color: #130000;
+}
