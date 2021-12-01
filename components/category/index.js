@@ -48,7 +48,7 @@ export const RightBox = () => {
     );
 };
 
-export const Category = ({isCate}) => {
+export const Category = ({isCate, listCategory}) => {
 
     const router = useRouter();
 
@@ -58,19 +58,19 @@ export const Category = ({isCate}) => {
         });
     };
 
-    const category = [
-        { title: 'Nội quy diễn đàn' },
-        { title: 'Thông tin hot' },
-        { title: 'Học tập' },
-        { title: 'Việc làm & nhà trọ' },
-        { title: 'Trao đổi & mua bán' },
-        { title: 'Công nghệ & kĩ thuật' },
-        { title: 'Kết bạn bốn phương' },
-        { title: 'Tư vấn sinh viên' },
-        { title: 'Cuộc thi' },
-        { title: 'Review Môn học' },
-        { title: 'Thể thao' },
-        { title: 'Chia sẻ' },
+    const category = listCategory || [
+        { name: 'Nội quy diễn đàn' },
+        { name: 'Thông tin hot' },
+        { name: 'Học tập' },
+        { name: 'Việc làm & nhà trọ' },
+        { name: 'Trao đổi & mua bán' },
+        { name: 'Công nghệ & kĩ thuật' },
+        { name: 'Kết bạn bốn phương' },
+        { name: 'Tư vấn sinh viên' },
+        { name: 'Cuộc thi' },
+        { name: 'Review Môn học' },
+        { name: 'Thể thao' },
+        { name: 'Chia sẻ' },
     ];
 
     return (

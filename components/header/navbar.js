@@ -2,22 +2,19 @@ import React, { useEffect, useState } from 'react';
 import {
     AppBar,
     Toolbar,
-    IconButton,
     Typography,
     Button,
     Grid,
     Menu,
     MenuItem,
 } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './header.module.css';
 import { useRouter } from 'next/router';
 import { logoutUser } from '../../store/user/userSlice';
 import { PATH } from 'utils/constant';
 
-export const NavBar = () => {
+export const NavBar = ({login}) => {
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const { user } = useSelector((state) => state.user);
@@ -95,33 +92,26 @@ export const NavBar = () => {
                             </Grid>
                         </Grid>
                         <Grid item xs={10} className={styles.btnWapper}>
+                            {!login && <>
                             <Button onClick={() => handleRedirect(PATH.TO_HOME)}>Diễn đàn</Button>
                             <Button onClick={() => handleRedirect(PATH.TO_HOME)}>Thành viên</Button>
                             <Button onClick={() => handleRedirect(PATH.TO_CHAT)}>Chat ngẫu nhiên</Button>
+                            </>}
+                           
                         </Grid>
                     </Grid>
-                    <Grid container item xs={4} justifyContent="flex-end" alignItems="center">
-                        <Grid item xs={5} className={styles.btnWapper}>
-                            <Button onClick={() => handleRedirect()}>
-                                {user ? `Hello ${user.username}, Đăng xuẩt` : 'Đăng nhập'}
-                            </Button>
-                        </Grid>
-                        {/* <Grid item xs={6}>
-                            <IconButton
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-controls={'primary-search-account-menu'}
-                                aria-haspopup="true"
-                                onClick={() => handleMenu()}
-                                color="inherit"
-                            >
-                            <FontAwesomeIcon icon={faUser} />
-                            </IconButton>
-                        </Grid> */}
-                    </Grid>
+                    {!login &&
+                        <Grid container item xs={4} justifyContent="flex-end" alignItems="center">
+                            <Grid item xs={5} className={styles.btnWapper}>
+                                <Button onClick={() => handleRedirect()}>
+                                    {user ? `Hello ${user.username}, Đăng xuẩt` : 'Đăng nhập'}
+                                </Button>
+                            </Grid>
+                        </Grid> 
+                    }
+                    
                 </Toolbar>
             </AppBar>
-            {/* {renderMenu} */}
         </div>
     );
 };
