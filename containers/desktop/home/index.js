@@ -12,22 +12,26 @@ import { Category } from '../../../components/category';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getListPost } from '../../../store/post/postSlice';
-import { setInfoUser } from '../../../store/user/userSlice';
+import { setInfoUser, logoutUser } from '../../../store/user/userSlice';
 import { LoadingScreen } from '../../../components/loading';
 
 export const RenderHomeDesktop = (props) => {
-    console.log("props", props);
-    const {trendingPost,  listPost, infoUser, categorys, totalPost } = props;
+    const { trendingPost, listPost, infoUser, categorys, totalPost } = props;
     const router = useRouter();
     const dispatch = useDispatch();
     const { user, token } = useSelector((state) => state.user);
     const [isLoading, setIsloading] = useState(true);
     const [total, setTotal] = useState(totalPost);
 
-    const handleRedirectPost = () => {
+    const handleRedirectPost = (postId) => {
         router.push({
             pathname: '/post/detail',
+            query: { postId },
         });
+    };
+
+    const handleRedirect = (path) => {
+        router.push(path);
     };
 
     useEffect(() => {
@@ -35,7 +39,11 @@ export const RenderHomeDesktop = (props) => {
             setIsloading(false);
         }
         if (infoUser) {
-            dispatch(setInfoUser(infoUser))
+            dispatch(setInfoUser(infoUser));
+        }
+        if (!infoUser && !trendingPost && !listPost) {
+            dispatch(logoutUser());
+            handleRedirect('/login');
         }
     }, [listPost, trendingPost, infoUser]);
 
@@ -70,7 +78,10 @@ export const RenderHomeDesktop = (props) => {
                                 } else {
                                     return (
                                         <Grid item xs={4} key={index}>
-                                            <TrendingCard post={item} />
+                                            <TrendingCard
+                                                post={item}
+                                                handleRedirectPost={handleRedirectPost}
+                                            />
                                         </Grid>
                                     );
                                 }
@@ -95,7 +106,7 @@ export const RenderHomeDesktop = (props) => {
                                                 xs={12}
                                                 key={index}
                                                 className={styles.cardNewsWapper}
-                                                onClick={() => handleRedirectPost()}
+                                                onClick={() => handleRedirectPost(item.postId)}
                                             >
                                                 <TitleCard post={item} />
                                             </Grid>
@@ -106,7 +117,7 @@ export const RenderHomeDesktop = (props) => {
                         )}
                     </Grid>
                     <Grid item xs={4} className={`${styles.rightBoxWapper}`}>
-                        <Category listCategory={categorys}/>
+                        <Category listCategory={categorys} />
                     </Grid>
                 </Grid>
             </div>

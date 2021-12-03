@@ -18,7 +18,7 @@
 }
 
 .nomal.nomal.nomal {
-    background-color: var(--horizon-color);
+    background-color: var(--primary-color);
     padding: 11px 10px;
     border-radius: 4px;
     font-size: var(--font-size-small);

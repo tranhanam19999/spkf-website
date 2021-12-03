@@ -1,6 +1,6 @@
 export const PATH = {
     TO_CHAT: '/chat',
-    TO_HOME: '/',
+    TO_HOME: '/home',
 };
 
 export const color = {

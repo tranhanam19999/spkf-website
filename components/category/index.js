@@ -11,9 +11,9 @@ export const RightBox = () => {
     const router = useRouter();
 
     const redirectCategory = () => {
-        router.push({
-            pathname: '/category',
-        });
+        // router.push({
+        //     pathname: '/category',
+        // });
     };
 
     const category = [
@@ -52,10 +52,11 @@ export const Category = ({isCate, listCategory}) => {
 
     const router = useRouter();
 
-    const redirectCategory = () => {
-        router.push({
-            pathname: '/category',
-        });
+    const handleRedirectCategory = (categoryId) => {
+        // router.push({
+        //     pathname: '/category',
+        //     query: { categoryId },
+        // });
     };
 
     const category = listCategory || [
@@ -86,7 +87,7 @@ export const Category = ({isCate, listCategory}) => {
                             key={index}
                             xs={12}
                             className={styles.cardNewsWapper}
-                            onClick={() => redirectCategory()}
+                            onClick={() => handleRedirectCategory(category.categoryId)}
                         >
                             <CategoryCard cate={item} />
                         </Grid>

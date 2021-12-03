@@ -61,8 +61,6 @@ export const LoginPage = (props) => {
 
     const loginForm = useForm();
     const submitForm = (form) => {
-        // dispatch(loginUser(form.email, form.password));
-        // router.push('/home')
         let loginInfo = {
             email: form.email,
             pass: form.password,

@@ -2,17 +2,22 @@ import axios from 'axios';
 
 const host = 'https://spkf-api.herokuapp.com/post';
 
-export const createPostApi = (authorId, title, content) => {
-    return axios
-        .post(`${host}`, {
-            authorId,
-            title,
-            content,
-            headers: { Authorization: `${localStorage.getItem('token')}` },
-        })
-        .then((res) => {
-            return res;
-        });
+export const createPostApi = (authorId, title, categoryId, content, token) => {
+    try {
+        return axios
+            .post(`${host}`, {
+                authorId,
+                title,
+                content,
+                categoryId,
+                headers: { Authorization: `${token}` }
+            })
+            .then((res) => {
+                return res;
+            });
+    } catch (e) {
+        return e.response;
+    }
 };
 
 export const getListPostApi = async (token, offset = 0, limit = 20) => {
@@ -31,15 +36,17 @@ export const getListPostApi = async (token, offset = 0, limit = 20) => {
     }
 };
 
-export const getPostByIDApi = (postId) => {
-    return axios
-        .get(`${host}`, {
-            headers: { Authorization: `${localStorage.getItem('token')}` },
-            params: {
-                postId: postId.toString(),
-            },
-        })
-        .then((res) => {
-            return res;
-        });
+export const getPostByIDApi = (postId, token) => {
+    try {
+        return axios
+            .get(`${host}`, {
+                headers: { Authorization: `${token}` },
+                params: { postId },
+            })
+            .then((res) => {
+                return res;
+            });
+    } catch (err) {
+        return err.response;
+    }
 };
