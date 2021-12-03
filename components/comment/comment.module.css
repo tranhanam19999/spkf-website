@@ -102,3 +102,19 @@
     padding-bottom: 7px;
     font-weight: 700;
 }
+
+.commentReplyWapper {
+    padding: 10px 40px 10px 160px;
+    border-bottom: 2px solid var(--silver-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnCreateCommentWapper {
+    padding-left: 20px;
+}
+
+.backgroundWhite.backgroundWhite.backgroundWhite > div {
+    background-color: var(--white-color)
+}

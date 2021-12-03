@@ -7,19 +7,32 @@ import { Breadcrumb } from '../../../components/breadcrumb';
 import { useRouter } from 'next/router';
 import { CustomButton } from '../../../components/button';
 import { PostDetail } from './paging';
+import { useEffect } from 'react';
 
 export const PostDetailDesktop = (props) => {
+    console.log('props', props);
+    const { categorys, postInfo } = props
     const router = useRouter();
 
     const handleCreatePost = () => {
         router.push({
-            pathname:'/post/create',
-        })
+            pathname: '/post/create',
+        });
     };
+
+    const handleRedirect = (path) => {
+        router.push(path);
+    }
+
+    useEffect(()=>{
+        if(!postInfo) {
+            handleRedirect('/login')
+        }
+    },[postInfo])
 
     return (
         <div className={styles.wapper}>
-            <Breadcrumb route={router.asPath} detailEndpoint="Học tập" />
+            <Breadcrumb route={router.asPath} detailEndpoint="Chung" />
             <div className={styles.btnCreate}>
                 <CustomButton
                     text="Tạo bài viết &#43;"
@@ -29,11 +42,11 @@ export const PostDetailDesktop = (props) => {
             </div>
             <Grid container>
                 <Grid item container md={8} xs={12} className={styles.cardWapper}>
-                    <PostDetail {...props}/>
+                    <PostDetail {...props} />
                 </Grid>
                 <Grid item md={4} container className={styles.rightBox}>
                     <Grid item xs={12} className={styles.categoryWapper}>
-                        <Category isCate={true} />
+                        <Category isCate={true} listCategory={categorys}/>
                     </Grid>
                 </Grid>
             </Grid>
