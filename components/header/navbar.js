@@ -33,6 +33,9 @@ export const NavBar = ({login}) => {
         }
         else if (user) {
             dispatch(logoutUser());
+            router.push({
+                pathname: '/login',
+            });
         } else {
             router.push({
                 pathname: '/login',

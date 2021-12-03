@@ -2,14 +2,12 @@ import moment from 'moment';
 import { convertISOToDate } from '../../utils';
 import styles from './post.module.css';
 
-export const TrendingCard = ({ post }) => {
-
-    console.log("post",post)
+export const TrendingCard = ({ post, handleRedirectPost }) => {
 
     return (
         <>
             {post ? (
-                <div className={styles.wapper}>
+                <div className={styles.wapper} onClick={() => handleRedirectPost(post.postId)}>
                     <div className={styles.categoryNameWapper}>
                         <span className={`${styles.textName}`}>{post.userInfo.fullName}</span>
                         <span className={`${styles.textNormal}`}> đã đăng trong </span>

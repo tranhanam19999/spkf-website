@@ -51,11 +51,11 @@
 }
 
 .createWapper.createWapper.createWapper {
-    padding-top: 30px;
+    padding-top: 15px;
 }
 
 .createContainer.createContainer.createContainer{
-    padding: 15px 32px 60px 32px;
+    padding: 15px 32px 20px 32px;
     background-color: var(--geyser-color);
 }
 
@@ -72,6 +72,7 @@
     height: max-content;
     background-color: var(--white-color);
     margin-top: 10px;
+    padding: 0;
 }
 
 .quillWapper.quillWapper.quillWapper > div:nth-child(2) {
@@ -80,4 +81,11 @@
 
 .quillStyle > div:nth-child(2) > div:nth-child(1){
     height: 150px !important;
+}
+
+.btnCreateWapper.btnCreateWapper.btnCreateWapper {
+    justify-content: end;
+    align-items: end;
+    display: flex;
+    padding: 15px 15px 0px 0px;
 }

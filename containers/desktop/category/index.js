@@ -11,7 +11,6 @@ export const RenderCategoryDesktop = (props) => {
     const router = useRouter();
 
     const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-    const category = [items, items, items, items];
     const post = {
         author: 'Nam Trần',
         createTime: "2021-09-04T09:35:29.528Z",
