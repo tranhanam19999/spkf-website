@@ -53,7 +53,6 @@ export async function getServerSideProps(ctx) {
 }
 
 export const LoginPage = (props) => {
-    console.log('props', props);
     const router = useRouter();
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user);
@@ -65,7 +64,7 @@ export const LoginPage = (props) => {
             email: form.email,
             pass: form.password,
         };
-        console.log('Login');
+
         router.push({
             pathname: '/login',
             query: {
@@ -91,28 +90,26 @@ export const LoginPage = (props) => {
         <div className={styles.loginContainer}>
             <div>
                 <div className={`${isRegister ? styles.hidden : ''}`}>
-                    <div className={styles.title}>Log In</div>
+                    <div className={styles.title}>SPKF - Forum</div>
                     <form id="login-form" onSubmit={loginForm.handleSubmit(submitForm)}>
                         <input
                             className={styles.input}
                             name="email"
-                            placeholder="Enter email"
+                            placeholder="Nhập tên đăng nhập"
                             {...loginForm.register('email')}
                         />
                         <input
                             type="password"
                             className={styles.input}
                             name="password"
-                            placeholder="Enter password"
+                            placeholder="Nhập mật khẩu"
                             {...loginForm.register('password')}
                         />
                         <div className={styles.buttonWapper}>
-                            <Button id={styles.button} type="submit" form="login-form">
-                                {' '}
-                                Đăng nhâp
+                            <Button className={styles.loginButton} type="submit" form="login-form">
+                                Đăng nhập
                             </Button>
                             <a className={styles.btnRegister} onClick={() => setIsRegister(true)}>
-                                {' '}
                                 Tạo tài khoản
                             </a>
                         </div>
@@ -120,12 +117,12 @@ export const LoginPage = (props) => {
                 </div>
 
                 <div className={`${!isRegister ? styles.hidden : ''}`}>
-                    <div className={styles.title}>Sign up</div>
+                    <div className={styles.title}>SPKF - Forum</div>
                     <form id="register-form" onSubmit={registerForm.handleSubmit(register)}>
                         <input
                             className={styles.input}
                             name="name"
-                            placeholder="Enter your full name"
+                            placeholder="Nhập tên"
                             {...registerForm.register('name', { required: true, minLength: 5 })}
                         />
                         <a
@@ -142,29 +139,27 @@ export const LoginPage = (props) => {
                         <input
                             className={styles.input}
                             name="email"
-                            placeholder="Enter email"
+                            placeholder="Nhập email"
                             {...registerForm.register('email')}
                         />
                         <input
                             className={styles.input}
                             name="username"
-                            placeholder="Enter username"
+                            placeholder="Nhập tên đăng nhập"
                             {...registerForm.register('username')}
                         />
                         <input
                             type="password"
                             className={styles.input}
                             name="password"
-                            placeholder="Enter password"
+                            placeholder="Nhập mật khẩu"
                             {...registerForm.register('password')}
                         />
                         <div className={styles.buttonWapper}>
-                            <Button id={styles.button} type="submit" form="register-form">
-                                {' '}
+                            <Button className={styles.loginButton} type="submit" form="register-form">
                                 Đăng kí
                             </Button>
                             <a className={styles.btnRegister} onClick={() => setIsRegister(false)}>
-                                {' '}
                                 Đăng nhập
                             </a>
                         </div>
