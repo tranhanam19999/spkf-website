@@ -32,15 +32,15 @@ export const getCommentByCommentIdApi = (commentId, token) => {
 
 export const createCommentPostApi = (content, postId, authorId, token) => {
     try {
-        return axios.post(`${host}`, {
-            data: {
+        return axios.post(
+            `${host}`,
+            {
                 content,
                 postId,
                 authorId,
             },
-
-            headers: { Authorization: `${token}` },
-        });
+            { headers: { Authorization: `${token}` } }
+        );
     } catch (err) {
         return err.response;
     }
@@ -48,15 +48,16 @@ export const createCommentPostApi = (content, postId, authorId, token) => {
 
 export const createCommentChildApi = (content, postId, authorId, parentId, token) => {
     try {
-        return axios.post(`${host}`, {
-            data: {
+        return axios.post(
+            `${host}`,
+            {
                 content,
                 postId,
                 authorId,
                 parentId,
             },
-            headers: { Authorization: `${token}` },
-        });
+            { headers: { Authorization: `${token}` } }
+        );
     } catch (err) {
         return err.response;
     }
