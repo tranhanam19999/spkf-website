@@ -86,7 +86,6 @@ export const PostDetail = (props) => {
                     commentId,
                     token
                 );
-                console.log(resCom);
                 if (resCom.status === 200) {
                     let data = resCom.data.data;
                     data.userInfo = user;
@@ -96,12 +95,28 @@ export const PostDetail = (props) => {
                     console.log('comList', comList);
                     setCommentList(comList);
                 }
+                setReply(null)
+                return true;
+            } else {
+                const resCom = await createCommentPostApi(
+                    com,
+                    postInfo.postId,
+                    user.userId,
+                    token
+                );
+                if (resCom.status === 200) {
+                    let data = resCom.data.data;
+                    data.userInfo = user;
+                    let comList = commentList.slice();
+                    comList.splice(0, 0, data);
+                    setCommentList(comList);
+                }
+                setReply(null)
+                return true;
             }
         } catch (e) {
             console.log(e.response);
-            // if (e.response.status === 403) {
-            //     router.push('/login');
-            // }
+            return false;
         }
     };
 

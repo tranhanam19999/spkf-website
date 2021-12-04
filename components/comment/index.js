@@ -15,8 +15,11 @@ export const Comment = ({ user, comment, commentRep, getMore, reply, setReply, a
         setReply(comment.commentId || comment.createdTime);
     };
 
-    const handleCreateComment = () => {
-        addComment(com, comment.commentId , comment.postId )
+    const handleCreateComment = async () => {
+        const result = addComment(com, comment.commentId , comment.postId )
+        if(result) {
+            setCom('')
+        }
     };
 
     const inputEl = useRef(null);
