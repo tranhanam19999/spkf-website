@@ -137,7 +137,7 @@ export const PostDetail = (props) => {
         }
     }, [comments, listAuthor]);
 
-    return commentList.length > 0 ? (
+    return postInfo ? (
         <div className={styles.postDetailContainer}>
             <div className={styles.headerCardWapper}>
                 <span className={styles.titleCard}>{postInfo.title}</span>
@@ -155,9 +155,10 @@ export const PostDetail = (props) => {
                 reply={reply}
                 setReply={setReply}
                 addComment={addComment}
+                isPost={true}
             />
-            <div style={{ marginLeft: 15 }}>
-                {commentList.map((item, index) => {
+            <div style={{ marginLeft: 25 }}>
+                {commentList.length > 0 && commentList.map((item, index) => {
                     let repComment = undefined;
                     if (item.parentId) {
                         repComment = commentList.find((i) => i.commentId === item.parentId);

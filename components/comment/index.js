@@ -5,7 +5,16 @@ import { useRef, useState } from 'react';
 import { TextField } from '@material-ui/core';
 import { CustomButton } from '../button';
 
-export const Comment = ({ user, comment, commentRep, getMore, reply, setReply, addComment }) => {
+export const Comment = ({
+    user,
+    comment,
+    commentRep,
+    getMore,
+    reply,
+    setReply,
+    addComment,
+    isPost,
+}) => {
     const [com, setCom] = useState('');
     const handleGetMore = () => {
         getMore(comment);
@@ -16,9 +25,9 @@ export const Comment = ({ user, comment, commentRep, getMore, reply, setReply, a
     };
 
     const handleCreateComment = async () => {
-        const result = addComment(com, comment.commentId , comment.postId )
-        if(result) {
-            setCom('')
+        const result = addComment(com, comment.commentId, comment.postId);
+        if (result) {
+            setCom('');
         }
     };
 
@@ -53,10 +62,14 @@ export const Comment = ({ user, comment, commentRep, getMore, reply, setReply, a
                     )}
 
                     <span className={`${styles.commentTextWapper} ${styles.comment}`}>
-                        {comment.content}
+                        {isPost ? (
+                            <div dangerouslySetInnerHTML={{ __html: comment.content }} />
+                        ) :
+                            comment.content
+                        }
                     </span>
                     <div>
-                        <span className={`${styles.reportText}`}>Report</span>
+                        <span className={`${styles.reportText}`}>{''}</span>
                         {comment?.totalChildren != 0 && (
                             <span
                                 className={styles.seeMoreComment}

@@ -8,14 +8,9 @@ import { useRouter } from 'next/router';
 import { CustomButton } from '../../../components/button';
 
 export const RenderCategoryDesktop = (props) => {
+    const { listPost, categorys, token, totalPost } = props
+    console.log("props", props)
     const router = useRouter();
-
-    const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-    const post = {
-        author: 'Nam Trần',
-        createTime: "2021-09-04T09:35:29.528Z",
-        title: ' Sinh viên ute Trần Hà Nam tham gia clc be dancer',
-    };
 
     const handleCreatePost = () => {
         router.push({
@@ -30,7 +25,7 @@ export const RenderCategoryDesktop = (props) => {
     }
 
     return (
-        <div  className={styles.wapper}>
+        <div className={styles.wapper} style={{minHeight: 'calc(100vh - 64px - 60px)'}}>
             <Breadcrumb route={router.asPath} detailEndpoint="Học tập"/>
             <div className={styles.btnCreate}>
                 <CustomButton text="Tạo bài viết &#43;" styleNomal={true} onClick={handleCreatePost}/>
@@ -40,7 +35,7 @@ export const RenderCategoryDesktop = (props) => {
                     <Grid item container xs={12} className={styles.cardContainer}>
                         <MyCardHeader title="Học tập" />
                         <Grid item container xs={12} className={styles.listCateWapper}>
-                            {items.map((item, index) => {
+                            {listPost.map((post, index) => {
                                 return (
                                     <Grid
                                         item
@@ -60,7 +55,7 @@ export const RenderCategoryDesktop = (props) => {
                 </Grid>
                 <Grid item md={4} container className={styles.rightBox}>
                     <Grid item xs={12} className={styles.categoryWapper}>
-                        <Category isCate={true} />
+                        <Category isCate={true} listCategory={categorys}/>
                     </Grid>
                 </Grid>
             </Grid>

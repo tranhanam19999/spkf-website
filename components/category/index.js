@@ -53,10 +53,10 @@ export const Category = ({isCate, listCategory}) => {
     const router = useRouter();
 
     const handleRedirectCategory = (categoryId) => {
-        // router.push({
-        //     pathname: '/category',
-        //     query: { categoryId },
-        // });
+        router.push({
+            pathname: '/category',
+            query: { categoryId },
+        });
     };
 
     const category = listCategory || [
@@ -87,7 +87,7 @@ export const Category = ({isCate, listCategory}) => {
                             key={index}
                             xs={12}
                             className={styles.cardNewsWapper}
-                            onClick={() => handleRedirectCategory(category.categoryId)}
+                            onClick={() => handleRedirectCategory(item.categoryId)}
                         >
                             <CategoryCard cate={item} />
                         </Grid>

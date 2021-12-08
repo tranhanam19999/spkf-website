@@ -32,7 +32,7 @@ export const PostDetailDesktop = (props) => {
 
     return (
         <div className={styles.wapper}>
-            <Breadcrumb route={router.asPath} detailEndpoint="Chung" />
+            <Breadcrumb route={router.asPath} detailEndpoint="Bài viết" />
             <div className={styles.btnCreate}>
                 <CustomButton
                     text="Tạo bài viết &#43;"

@@ -5,13 +5,16 @@ const host = 'https://spkf-api.herokuapp.com/post';
 export const createPostApi = (authorId, title, categoryId, content, token) => {
     try {
         return axios
-            .post(`${host}`, {
-                authorId,
-                title,
-                content,
-                categoryId,
-                headers: { Authorization: `${token}` }
-            })
+            .post(
+                `${host}`,
+                {
+                    authorId,
+                    title,
+                    content,
+                    categoryId,
+                },
+                { headers: { Authorization: `${token}` } }
+            )
             .then((res) => {
                 return res;
             });
@@ -31,6 +34,21 @@ export const getListPostApi = async (token, offset = 0, limit = 20) => {
                 return res;
             });
         return apiRes;
+    } catch (err) {
+        return err.response;
+    }
+};
+
+export const getListPostByCategory = (categoryId, token, offset, limit) => {
+    try {
+        return axios
+            .get(`${host}/list`, {
+                params: { categoryId, offset, limit },
+                headers: { Authorization: `${token}` },
+            })
+            .then((res) => {
+                return res;
+            });
     } catch (err) {
         return err.response;
     }
