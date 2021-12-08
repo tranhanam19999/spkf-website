@@ -9,7 +9,7 @@ export const TitleCard = ({ post, isCate }) => {
                 <div className={styles.wapperTitleCard}>
                     {isCate && 
                         <div className={styles.imgWapper}>
-                            <img src="/no-image.jpg" className={styles.imageCircle} />
+                            <img src="/avata.png" className={styles.imageCircle} />
                         </div>
                     }
                     <div className={styles.containerTitleCard} style={{ minHeight: '37px' }}>
@@ -25,7 +25,7 @@ export const TitleCard = ({ post, isCate }) => {
                                     moment(post.createdTime).utcOffset('+0700')
                                 , true)
                                 : '  '}
-                            {` -  Đăng bởi ${ post.userInfo.fullName }`}
+                            {` -  Đăng bởi ${ post.userInfo?.fullName }`}
                         </span>
                     </div>
                 </div>

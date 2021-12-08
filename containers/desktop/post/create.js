@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPostApi } from '../../../api/post';
+import { notify } from '../../../utils/notify';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
     ssr: false,
@@ -62,28 +63,21 @@ export const PostCreateDesktop = (props) => {
     const { user } = useSelector((state) => state.user);
     const [isLoading, setIsloading] = useState(false);
 
-    // const form = useForm({
-    //     reValidateMode: 'onChange',
-    //     defaultValues: {
-    //         title: '',
-    //     },
-    // });
-
-    // const { register, reset, handleSubmit, setValue, watch, formState, setError, errors } =
-    // form;
     const handleCreate = async () => {
-        // handleSubmit(submit)();
-        console.log('value', content, title, cate);
+        if (content === '' && title === '' && !cate) {
+            notify.warn("Điền Đầy đủ thông tin")
+            return
+        }
         setIsloading(true);
         try {
             const resPost = await createPostApi(user.userId, title, cate, content, token);
             console.log('resPost', resPost);
-            // if(resPost.status === 200) {
-            //     router.push({
-            //         pathname: '/post/detail',
-            //         // query: { postId: resPost.data.data.}
-            //     })
-            // }
+            if(resPost.status === 200) {
+                router.push({
+                    pathname: '/post/detail',
+                    query: { postId: resPost.data.data.postId }
+                })
+            }
         } catch (error) {
             console.log(error.response);
         }
@@ -102,16 +96,6 @@ export const PostCreateDesktop = (props) => {
             setCate(categorys[0].categoryId);
         }
     }, [categorys]);
-
-    // const contern = '<p><strong>aaaaa</strong></p><p>ádasđá</p><p><br></p><p>s</p><p>a<span class="ql-size-huge">dasd dung</span></p>'
-
-    // const handleString = (str) => {
-    //     var parser = new DOMParser();
-    //     var doc = parser.parseFromString(str, 'text/html');
-    //     return doc.body;
-    // };
-
-    // const a = handleString(contern)
 
     return cate ? (
         <div className={styles.wapper}>

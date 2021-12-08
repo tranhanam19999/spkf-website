@@ -28,7 +28,7 @@ export const Layout = (props) => {
             </Head>
             <div>
                 {router.pathname.includes('/login') ? <NavBar login={true}/> : <NavBar />}
-                <div>{children}</div>
+                <div styles={{minWidth: 'calc(100vh - 64px - 60px)'}}>{children}</div>
                 {router.pathname.includes('/login') ? <Footer footerWapperStyle={styles.footer}/> : <Footer />}
             </div>
         </>
