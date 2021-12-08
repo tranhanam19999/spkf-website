@@ -11,7 +11,7 @@ export const CategoryCard = ({cate}) => {
         <div className={styles.cardWapper}>
             <div className={styles.titleWapper}>
                 <span className={styles.categoryCardTitle}>{cate.name}</span>
-                <span className={styles.textTimeView}>{`Threads: ${cate.count ? cate.count : 0}`}</span>
+                {/* <span className={styles.textTimeView}>{`Threads: ${cate.count ? cate.count : 0}`}</span> */}
             </div>
             {/* <div className={styles.imgWapper}>
                 <img src="/no-image.jpg" className={styles.imageCircle} />
