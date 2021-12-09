@@ -26,7 +26,6 @@ const slice = createSlice({
             state.token = null;
         },
         setInfoAction: (state, action) => {
-            console.log("action", action.payload)
             state.user = {
                 fullName: action.payload.fullName,
                 email: action.payload.email,

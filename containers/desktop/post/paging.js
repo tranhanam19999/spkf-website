@@ -31,10 +31,8 @@ export const PostDetail = (props) => {
     });
 
     const handleGetMore = async (comment) => {
-        console.log(comment);
         try {
             const commentResult = await getCommentByCommentIdApi(comment.commentId, token);
-            console.log('Comment', commentResult);
             if (commentResult.status === 200) {
                 let listAuthorId = [];
                 commentResult.data.data.map((item) => {
@@ -92,7 +90,6 @@ export const PostDetail = (props) => {
                     let comList = commentList.slice();
                     const commentItem = commentList.find((com) => com.commentId === commentId);
                     comList.splice(commentList.indexOf(commentItem) + 1, 0, data);
-                    console.log('comList', comList);
                     setCommentList(comList);
                 }
                 setReply(null)

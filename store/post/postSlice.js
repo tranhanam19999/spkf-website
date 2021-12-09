@@ -17,7 +17,6 @@ const slice = createSlice({
     },
     reducers: {
         getListPostAction: (state, action) => {
-            console.log('action.payload', action.payload);
             state.listPost = action.payload;
             state.trendingPost = action.payload;
         },
@@ -29,7 +28,6 @@ const { getListPostAction } = slice.actions;
 
 export const getListPost = (token, callback) => async (dispatch) => {
     const response = await getListPostApi(token);
-    console.log('response', response);
     if (response) {
         if (response.status === 200) {
             if (response.data.data?.length > 0) {

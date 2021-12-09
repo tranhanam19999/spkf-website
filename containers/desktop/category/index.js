@@ -14,11 +14,7 @@ export const RenderCategoryDesktop = (props) => {
     const router = useRouter();
     const { categoryId } = router.query;
     const [isLoading, setIsloading] = useState(true);
-    console.log('props', props);
-
     const cateChoice = categorys.find((i) => i.categoryId === categoryId);
-    console.log("cateChoice", cateChoice)
-
     const handleCreatePost = () => {
         router.push({
             pathname: '/post/create',
