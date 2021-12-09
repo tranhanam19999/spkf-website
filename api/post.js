@@ -39,9 +39,9 @@ export const getListPostApi = async (token, offset = 0, limit = 20) => {
     }
 };
 
-export const getListPostByCategory = (categoryId, token, offset, limit) => {
+export const getListPostByCategory = async (categoryId, token, offset, limit) => {
     try {
-        return axios
+        return await axios
             .get(`${host}/list`, {
                 params: { categoryId, offset, limit },
                 headers: { Authorization: `${token}` },
