@@ -51,16 +51,18 @@ export const loadingCategory = async (ctx) => {
                 props.trendingPost = result;
                 props.listPost = result;
             }
-            const resCates = await getCategoryListApi(0, 500, token);
-            if (resCates.status === 200) {
-                props.categorys = resCates.data.data;
-            }
         } else {
-            props.invalidToken = true;
+            console.log("resListPost", resListPost)
+        }
+
+        const resCates = await getCategoryListApi(0, 500, token);
+        if (resCates.status === 200) {
+            props.categorys = resCates.data.data;
         }
     } else {
         props.invalidToken = true;
     }
+
     return props;
 };
 
@@ -70,7 +72,7 @@ export async function getServerSideProps(ctx) {
         ...value,
     };
 
-    if (props.listPost.length === 0) {
+    if (props.invalidToken) {
         return {
             redirect: {
                 destination: '/login',

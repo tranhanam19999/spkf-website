@@ -10,7 +10,6 @@ import { PostDetail } from './paging';
 import { useEffect } from 'react';
 
 export const PostDetailDesktop = (props) => {
-    console.log('props', props);
     const { categorys, postInfo } = props
     const router = useRouter();
 

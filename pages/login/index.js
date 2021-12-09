@@ -16,7 +16,6 @@ export const loadingHome = async (ctx) => {
     const { res } = ctx;
     if (loginInfo) {
         const info = JSON.parse(loginInfo);
-        console.log(info);
         if (info.email && info.pass) {
             try {
                 const resLogin = await loginApi(info.email, info.pass);

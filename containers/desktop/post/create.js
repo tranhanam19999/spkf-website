@@ -71,7 +71,6 @@ export const PostCreateDesktop = (props) => {
         setIsloading(true);
         try {
             const resPost = await createPostApi(user.userId, title, cate, content, token);
-            console.log('resPost', resPost);
             if(resPost.status === 200) {
                 router.push({
                     pathname: '/post/detail',
