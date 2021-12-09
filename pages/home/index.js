@@ -69,7 +69,6 @@ export const loadingHome = async (ctx) => {
 
 export async function getServerSideProps(ctx) {
     const value = await loadingHome(ctx);
-    // console.log('BBBBBBB', value);
     const props = {
         ...value,
     };
