@@ -23,20 +23,16 @@ export const createPostApi = (authorId, title, categoryId, content, token) => {
     }
 };
 
-export const getListPostApi = async (token, offset = 0, limit = 20) => {
-    try {
-        let apiRes = await axios
-            .get(`${host}/list`, {
-                params: { offset, limit },
-                headers: { Authorization: `${token}` },
-            })
-            .then((res) => {
-                return res;
-            });
-        return apiRes;
-    } catch (err) {
-        return err.response;
-    }
+export const getListPostApi = (token, offset = 0, limit = 20) => {
+    return axios
+        .get(`${host}/list`, {
+            params: { offset, limit },
+            headers: { Authorization: `${token}` },
+        })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => err.response);
 };
 
 export const getListPostByCategory = async (categoryId, token, offset, limit) => {
