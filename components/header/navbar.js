@@ -23,7 +23,7 @@ export const NavBar = ({login}) => {
 
     const handleRedirectHome = () => {
         router.push({
-            pathname: '/',
+            pathname: '/home',
         });
     };
 
