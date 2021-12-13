@@ -1,0 +1,13 @@
+
+.chatConversationWrapper {
+    overflow-y: auto;
+    height: calc(100vh - 76px - 32px - 64px - 84px);
+}
+
+.chatConversationWrapper {
+    padding: 20px 32px;
+}
+
+.chatConversationWrapper > div:last-child {
+    margin-bottom: 0px;
+}

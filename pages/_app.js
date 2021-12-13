@@ -1,20 +1,51 @@
 import React from 'react';
 import NextApp from 'next/app';
-import withReduxStore from '../lib/with-redux-store';
-import Head from 'next/head';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { createTheme, ThemeProvider } from '@material-ui/core';
 import { Layout } from '../components/layout';
+import withReduxStore from '../lib/with-redux-store';
 import '../styles/globals.css';
+import { MOBILE } from 'utils';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist'
+import 'react-quill/dist/quill.snow.css'
 
-const MOBILE = /Android|BlackBerry|iPhone|iPod|Opera Mini|IEMobile|WPDesktop/i;
+export const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#1D6692',
+            dark: '#00a45e',
+            contrastText: '#fff',
+        },
+    },
+    typography: {
+        button: {
+            textTransform: 'none',
+        },
+    },
+});
 function MyApp({ Component, pageProps, reduxStore }) {
-    const { isMobile } = pageProps;
-
+    const persistor = persistStore(reduxStore)
     return (
         <Provider store={reduxStore}>
-            <Layout isMobile={isMobile}>
-                <Component {...pageProps} />
-            </Layout>
+            <PersistGate loading={null} persistor={persistor}>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Layout isMobile={pageProps.isMobile}>
+                        <Component {...pageProps} />
+                        <ToastContainer
+                            limit={2}
+                            pauseOnHover={false}
+                            hideProgressBar
+                            autoClose={2000}
+                            closeOnClick
+                        />
+                    </Layout>
+                </ThemeProvider>
+            </PersistGate>
         </Provider>
     );
 }
@@ -37,5 +68,12 @@ MyApp.getInitialProps = async (appContext) => {
         }
     };
 };
+
+
+function getCookie(cookie) {
+    const value = cookie;
+    const parts = value.split(`session_token=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 export default withReduxStore(MyApp);

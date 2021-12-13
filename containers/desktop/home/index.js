@@ -1,29 +1,59 @@
 import { MyCardHeader } from '../../../components/card';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { TrendingCard } from '../../../components/post/trendingCard';
+import { TitleCard } from '../../../components/post/titleCard';
 import { Grid, Typography, TextField, makeStyles, Box } from '@material-ui/core';
 import { CardPost } from '../../../components/post';
 import Image from 'next/image';
 import styles from './home.module.css';
-import { RightBox } from '../../../components/category'
+import { Category } from '../../../components/category';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getListPost } from '../../../store/post/postSlice';
+import { setInfoUser, logoutUser } from '../../../store/user/userSlice';
+import { LoadingScreen } from '../../../components/loading';
 
-export const RenderHomeDesktop = () => {
-    const trendings = [1, 2, 3, 4, 5, 6];
-    const news = [1,2,3,4,5,6,7,8];
-    const post = {
-        author: 'Hà Nam',
-        title: 'Chi sẻ mẹo để có thể trở thàng full sờ tắc Developer',
-        category: 'Học tập',
-        createTime: 1519129853500,
-        totalViews: 100,
+export const RenderHomeDesktop = (props) => {
+    const { trendingPost, listPost, infoUser, categorys, totalPost } = props;
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const { user, token } = useSelector((state) => state.user);
+    const [isLoading, setIsloading] = useState(true);
+    const [total, setTotal] = useState(totalPost);
+
+    const handleRedirectPost = (postId) => {
+        router.push({
+            pathname: '/post/detail',
+            query: { postId },
+        });
     };
 
-    return (
+    const handleRedirect = (path) => {
+        router.push(path);
+    };
+
+    useEffect(() => {
+        if (listPost && trendingPost) {
+            setIsloading(false);
+        }
+        if (infoUser) {
+            dispatch(setInfoUser(infoUser));
+        }
+        if (!infoUser && !trendingPost && !listPost) {
+            dispatch(logoutUser());
+            handleRedirect('/login');
+        }
+    }, [listPost, trendingPost, infoUser]);
+
+    return isLoading ? (
+        <LoadingScreen />
+    ) : (
         <>
             <div className={styles.headerWapper}>
                 <Image
-                    src="/no-image.jpg"
+                    src="/spkf.png"
                     className={styles.headerImage}
                     layout="fill"
                     objectFit="fill"
@@ -36,69 +66,58 @@ export const RenderHomeDesktop = () => {
                 </div>
             </div>
             <div className={styles.bodyWapper}>
-                <div className={styles.trendingWapper}>
-                    <div className={styles.trendingTitleWapper}>
-                        <span>TRENDING tại diễn đàn</span>
-                    </div>
-                    <Grid container spacing={2}>
-                        {trendings.map((item, index) => {
-                            return (
-                                <Grid item xs={4} key={index}>
-                                    <TrendingCard post={post} />
-                                </Grid>
-                            );
-                        })}
-                    </Grid>
-                </div>
-                <Grid container className={styles.cardWapper} spacing={2}>
-                    <Grid item xs={8} container>
-                        <Grid item container xs={12} className={styles.newsWapper}>
-                            <Grid item xs={12}>
-                                <MyCardHeader title="Bản tin" />
-                            </Grid>
-                            <Grid
-                                item
-                                container
-                                xs={12}
-                                className={styles.listCart}
-                            >
-                                {news.map((item, index) => {
+                {trendingPost && (
+                    <div className={styles.trendingWapper}>
+                        <div className={styles.trendingTitleWapper}>
+                            <span className={styles.title}>TRENDING tại diễn đàn</span>
+                        </div>
+                        <Grid container spacing={2}>
+                            {trendingPost.map((item, index) => {
+                                if (index > 5) {
+                                    return <></>;
+                                } else {
                                     return (
-                                        <Grid item xs={6} key={index} className={styles.cardNewsWapper}>
-                                            <TrendingCard post={post} />
+                                        <Grid item xs={4} key={index}>
+                                            <TrendingCard
+                                                post={item}
+                                                handleRedirectPost={handleRedirectPost}
+                                            />
                                         </Grid>
                                     );
-                                })}
-                            </Grid>
+                                }
+                            })}
                         </Grid>
-                        <Grid item container xs={12} className={styles.matingWapper}>
-                            <Grid item xs={12}>
-                                <MyCardHeader title="Góc Mating" />
+                    </div>
+                )}
+
+                <Grid container className={styles.cardWapper} spacing={2}>
+                    <Grid item xs={8} container>
+                        {listPost && (
+                            <Grid item container xs={12}>
+                                <Grid item xs={12}>
+                                    <MyCardHeader title="Bản tin" />
+                                </Grid>
+                                <Grid item container xs={12} className={styles.listCart}>
+                                    {listPost.map((item, index) => {
+                                        return (
+                                            <Grid
+                                                key={`post-${index}`}
+                                                item
+                                                xs={12}
+                                                key={index}
+                                                className={styles.cardNewsWapper}
+                                                onClick={() => handleRedirectPost(item.postId)}
+                                            >
+                                                <TitleCard post={item} />
+                                            </Grid>
+                                        );
+                                    })}
+                                </Grid>
                             </Grid>
-                            <Grid item container spacing={0} xs={12} className={styles.listCart}>
-                                {news.map((item, index) => {
-                                    return (
-                                        <CardPost
-                                            icon={
-                                                <FontAwesomeIcon
-                                                    icon={faComment}
-                                                    color="#86adc1"
-                                                    size="sm"
-                                                />
-                                            }
-                                            titleCard="Thông báo"
-                                            post={post}
-                                            index={index}
-                                        />
-                                    );
-                                })}
-                            </Grid>
-                        </Grid>
+                        )}
                     </Grid>
-                    <Grid item xs={4} className={styles.rightBoxWapper}>
-                        <Grid item xs={12} className={styles.categoryWapper}>
-                            <RightBox/>
-                        </Grid>
+                    <Grid item xs={4} className={`${styles.rightBoxWapper}`}>
+                        <Category listCategory={categorys} />
                     </Grid>
                 </Grid>
             </div>

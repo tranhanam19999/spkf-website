@@ -37,15 +37,44 @@
     font-weight: bold;
 }
 
+.containerTitleCard {
+    /* min-height: 78px;
+    cursor: pointer; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* background-color: var(--alto-color); */
+    padding: 10px;
+}
+
+.wapperTitleCard {
+    min-height: 57px;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    background-color: var(--geyser-color);
+    /* margin: 10px; */
+}
+
+.wapperTitleCard:hover {
+    background-color: var(--casper-color);
+}
+
 .wapper {
     min-height: 78px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: var(--alto-color);
+    background-color: var(--geyser-color);
     padding: 10px;
+    height: 100%;
 }
+
+.wapper:hover {
+    background-color: var(--casper-color);
+}
+
 
 .cardItem {
     padding: 10px;
@@ -68,8 +97,9 @@
 
 .imgWapper {
     display: table-cell;
-    width: 50px;
+    width: 80px;
     padding: 0 10px 0 10px;
+    align-self: center;
 }
 
 .imageCircle {

@@ -1,0 +1,120 @@
+.commentContainer {
+    border-bottom: 2px solid var(--silver-color);
+    padding-bottom: 10px;
+    display: flex;
+}
+
+.imageCircle {
+    border-radius: 50%;
+    height: 90px;
+    width: 90px;
+    align-self: center;
+}
+
+.imgWapper {
+    display: flex;
+    flex-direction: column;
+    width: 140px;
+    padding: 15px 0 15px 0;
+}
+
+.userNameIdWapper {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.commentWapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: calc(100% - 180px);
+
+    padding: 0 20px;
+}
+
+.repComment {
+    padding-top: 10px;
+}
+
+.commentTextWapper {
+    padding-top: 10px;
+}
+
+.textTime {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0.03em;
+    color: var(--gray-color);
+    padding-top: 15px;
+}
+
+.comment {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.03em;
+    color: var(--black-color);
+}
+
+.reportText {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.replyText {
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.seeMoreComment {
+    position: absolute;
+    bottom: 0;
+    right: 65px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.repComment {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000000;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.repName {
+    padding-bottom: 7px;
+    font-weight: 700;
+}
+
+.commentReplyWapper {
+    padding: 10px 40px 10px 160px;
+    border-bottom: 2px solid var(--silver-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnCreateCommentWapper {
+    padding-left: 20px;
+}
+
+.backgroundWhite.backgroundWhite.backgroundWhite > div {
+    background-color: var(--white-color)
+}

@@ -1,53 +1,88 @@
 import { MyCardHeader } from '../../../components/card';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
-import { Grid, Typography, TextField, makeStyles, Box } from '@material-ui/core';
-import Image from 'next/image';
+import { Grid } from '@material-ui/core';
 import styles from './category.module.css';
-import { CardPost } from '../../../components/post';
-import { RightBox } from '../../../components/category';
+import { Category } from '../../../components/category';
+import { TitleCard } from '../../../components/post/titleCard';
+import { Breadcrumb } from '../../../components/breadcrumb';
+import { CustomButton } from '../../../components/button';
+import { useRouter } from 'next/router';
+import { LoadingScreen } from '../../../components/loading';
+import { useState, useEffect } from 'react';
 
 export const RenderCategoryDesktop = (props) => {
-    const items = [1, 2, 3, 4, 5];
-    const category = [items, items, items, items];
-    const post = {
-        author: 'Nam Trần',
-        createTime: 1519129853500,
-        title: ' Sinh viên ute Trần Hà Nam tham gia clc be dancer',
+    const { listPost, categorys, token, totalPost } = props;
+    const router = useRouter();
+    const { categoryId } = router.query;
+    const [isLoading, setIsloading] = useState(true);
+    const cateChoice = categorys.find((i) => i.categoryId === categoryId);
+    const handleCreatePost = () => {
+        router.push({
+            pathname: '/post/create',
+        });
     };
 
-    return (
-        <Grid container className={styles.wapper}>
-            <Grid item container md={8} xs={12} className={styles.cardWapper}>
-                {category.map((cate, index) => {
-                    return (
-                        <Grid item xs={12} key={index} className={styles.cardContainer}>
-                            <MyCardHeader title="Đại sảnh" />
-                            {cate.map((item, index) => {
-                                return (
-                                    <CardPost
-                                        icon={
-                                            <FontAwesomeIcon
-                                                icon={faComment}
-                                                color="#86adc1"
-                                                size="sm"
-                                            />
-                                        }
-                                        titleCard="Thông báo"
-                                        post={post}
-                                        index={index}
-                                    />
-                                );
-                            })}
-                        </Grid>
-                    );
-                })}
-            </Grid>
-            <Grid item md={4} container className={styles.rightBox}>
-                <Grid item xs={12} className={styles.categoryWapper}>
-                    <RightBox />
+    const handleRedirectPost = (postId) => {
+        router.push({
+            pathname: '/post/detail',
+            query: {
+                postId: postId,
+            },
+        });
+    };
+
+    useEffect(() => {
+        setIsloading(false);
+    }, [categorys, listPost]);
+
+    return !isLoading ? (
+        <div className={styles.wapper} style={{ minHeight: 'calc(100vh - 64px - 60px)' }}>
+            <Breadcrumb route={router.asPath} detailEndpoint={cateChoice.name} />
+            <div className={styles.btnCreate}>
+                <CustomButton
+                    text="Tạo bài viết &#43;"
+                    styleNomal={true}
+                    onClick={handleCreatePost}
+                />
+            </div>
+            <Grid container>
+                <Grid item container md={8} xs={12} className={styles.cardWapper}>
+                    <Grid item container xs={12} className={styles.cardContainer}>
+                        <MyCardHeader title="Danh sách bài viết" />
+                        {listPost.length == 0 ? (
+                            <div className={styles.emptyText}>Chưa có dữ liệu</div>
+                        ) : (
+                            <Grid item container xs={12} className={styles.listCateWapper}>
+                                {listPost.map((post, index) => {
+                                    return (
+                                        <Grid
+                                            item
+                                            xs={12}
+                                            key={index}
+                                            className={styles.cardNewsWapper}
+                                            onClick={() => handleRedirectPost(post.postId)}
+                                        >
+                                            <TitleCard post={post} isCate={true} />
+                                        </Grid>
+                                    );
+                                })}
+                            </Grid>
+                        )}
+                    </Grid>
+                    {/* );
+                })} */}
+                </Grid>
+                <Grid item md={4} container className={styles.rightBox}>
+                    <Grid item xs={12} className={styles.categoryWapper}>
+                        <Category isCate={true} listCategory={categorys} />
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </div>
+    ) : (
+        <>
+        <div style={{height: 'calc(100vh - 64px - 60px)'}}></div>
+         <LoadingScreen />
+        </>
+       
     );
 };

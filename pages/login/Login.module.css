@@ -1,5 +1,5 @@
 .loginContainer {
-    background: var(--alto-color);
+    background: var(--geyser-color);
     /* background: rgba(0, 0, 0, 0.53); */
     padding: 40px 100px;
     box-shadow: 0px 50px 30px -30px rgb(0 0 0 / 30%);
@@ -21,7 +21,7 @@
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 30px;
-    color: #ff7361;
+    color: var(--primary-color);
     font-weight: 300;
     font-size: 24px;
     letter-spacing: 1px;
@@ -48,13 +48,11 @@
     outline: none;
 }
 
-#button,
-.rerun-button {
+button.loginButton {
     padding: 10px 20px;
     margin-top: 20px;
     border-radius: 3px;
-    background: #ff7361;
-    color: white;
+
     text-transform: uppercase;
     letter-spacing: 1px;
     display: inline-block;
@@ -62,9 +60,14 @@
     border: none;
 }
 
+button.loginButton, button.loginButton:hover {
+    background: var(--primary-color);
+    color: var(--white-color);
+}
+
 .error {
     color: var(--error-color);
-    font-size: 18px;
+    font-size: 13px;
     padding-top: 5px;
     padding-left: 5px;
 }

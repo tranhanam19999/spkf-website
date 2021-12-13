@@ -11,6 +11,7 @@ export function MyCardHeader({ title, children, style, titleStyle }) {
                     fontWeight: '600',
                     lineHeight: '28px',
                     width: '100%',
+                    color: '#fff',
                     ...(titleStyle || {}),
                 }}
             >
