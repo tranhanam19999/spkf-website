@@ -3,18 +3,15 @@ import axios from 'axios';
 const host = 'https://spkf-api.herokuapp.com/comment';
 
 export const getCommentInPostApi = (postId, token) => {
-    try {
-        return axios
-            .get(`${host}/by-post`, {
-                headers: { Authorization: `${token}` },
-                params: { postId },
-            })
-            .then((res) => {
-                return res;
-            });
-    } catch (err) {
-        return err.response;
-    }
+    return axios
+        .get(`${host}/by-post`, {
+            headers: { Authorization: `${token}` },
+            params: { postId },
+        })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => err.response);
 };
 
 export const getCommentByCommentIdApi = (commentId, token) => {
@@ -27,12 +24,13 @@ export const getCommentByCommentIdApi = (commentId, token) => {
         })
         .then((res) => {
             return res;
-        });
+        })
+        .catch((err) => err.response);
 };
 
 export const createCommentPostApi = (content, postId, authorId, token) => {
-    try {
-        return axios.post(
+    return axios
+        .post(
             `${host}`,
             {
                 content,
@@ -40,15 +38,13 @@ export const createCommentPostApi = (content, postId, authorId, token) => {
                 authorId,
             },
             { headers: { Authorization: `${token}` } }
-        );
-    } catch (err) {
-        return err.response;
-    }
+        )
+        .catch((err) => err.response);
 };
 
 export const createCommentChildApi = (content, postId, authorId, parentId, token) => {
-    try {
-        return axios.post(
+    return axios
+        .post(
             `${host}`,
             {
                 content,
@@ -57,8 +53,6 @@ export const createCommentChildApi = (content, postId, authorId, parentId, token
                 parentId,
             },
             { headers: { Authorization: `${token}` } }
-        );
-    } catch (err) {
-        return err.response;
-    }
+        )
+        .catch((err) => err.response);
 };
