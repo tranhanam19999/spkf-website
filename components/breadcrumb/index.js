@@ -7,14 +7,14 @@ export const Breadcrumb = ({ route, detailEndpoint }) => {
             case '/category':
                 return (
                     <>
-                        <span onClick={() => router.push('/')}> Diễn đàn </span>
+                        <span onClick={() => router.push('/home')}> Diễn đàn </span>
                     </>
                 );
             case '/post/detail':
             case '/post/create':
                 return (
                     <>
-                        <span onClick={() => router.push('/')}> Diễn đàn </span>
+                        <span onClick={() => router.push('/home')}> Diễn đàn </span>
                     </>
                 )
         }

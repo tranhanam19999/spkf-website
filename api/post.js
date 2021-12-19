@@ -55,16 +55,3 @@ export const getPostByIDApi = (postId, token) => {
         })
         .catch((err) => err.response);
 };
-
-export const reportPostApi = (postId, reportedType, reportedReason, token) => {
-    return axios({
-        method: 'PUT',
-        headers: { Authorization: `${token}` },
-        data: { postId, reportedType, reportedReason },
-        url: `${host}/report`,
-        })
-        .then((res) => {
-            return res;
-        })
-        .catch((err) => err.response);
-};

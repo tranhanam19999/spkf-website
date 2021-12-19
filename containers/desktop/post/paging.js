@@ -10,7 +10,7 @@ import {
     getCommentByCommentIdApi,
 } from '../../../api/comment';
 import { getUserInfoApi } from '../../../api/user';
-import { reportPostApi } from '../../../api/post';
+import { reportApi } from '../../../api/report';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInfoUser, logoutUser } from '../../../store/user/userSlice';
 import { useRouter } from 'next/router';
@@ -24,7 +24,7 @@ export const PostDetail = (props) => {
     const [commentList, setCommentList] = useState([]);
     const userInfo = listAuthor.find((user) => user.userId === postInfo.authorId);
     const [reply, setReply] = useState(null);
-    const [openReport, setOpenReport] = useState(false)
+    const [openReport, setOpenReport] = useState(null)
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -86,7 +86,7 @@ export const PostDetail = (props) => {
         }
     };
 
-    const addComment = async (com, commentId, postId) => {
+    const addComment = async (com, commentId, postId, comment) => {
         try {
             let resCom
             if (commentId) {
@@ -100,6 +100,7 @@ export const PostDetail = (props) => {
                 if (resCom.status === 200) {
                     let data = resCom.data.data;
                     data.userInfo = user;
+                    data.indexSize = comment.indexSize + 1;
                     let comList = commentList.slice();
                     const commentItem = commentList.find((com) => com.commentId === commentId);
                     comList.splice(commentList.indexOf(commentItem) + 1, 0, data);
@@ -113,6 +114,7 @@ export const PostDetail = (props) => {
                 if (resCom.status === 200) {
                     let data = resCom.data.data;
                     data.userInfo = user;
+                    data.indexSize = comment.indexSize + 1;
                     let comList = commentList.slice();
                     comList.splice(0, 0, data);
                     setCommentList(comList);
@@ -136,13 +138,18 @@ export const PostDetail = (props) => {
         }
     };
 
-    const addReport = async (report, reportType) => {
+    const addReport = async (report, reportType, commentId, postId) => {
         console.log("report, reportType", report, reportType)
         if(report === '') {
             notify.warn('Phải nhập nội dung report')
             return false
         }
-        const response = await reportPostApi(postInfo.postId, reportType, report, token);
+        let response
+        if(commentId) {
+            response = await reportApi(null, commentId, user.userId, reportType, report, token)
+        } else {
+            response = await reportApi(postInfo.postId, null, user.userId, reportType, report, token)
+        }
         if (response.status === 200) { 
             notify.success('Thành công')
             return true;
@@ -214,6 +221,9 @@ export const PostDetail = (props) => {
                             reply={reply}
                             setReply={setReply}
                             addComment={addComment}
+                            openReport={openReport}
+                            setOpenReport={setOpenReport}
+                            addReport={addReport}
                         />
                     );
                 })}
