@@ -28,7 +28,8 @@ export const loadingHome = async (ctx) => {
             // get list comments
             const resCom = await getCommentInPostApi(postId, token);
             if (resCom.status === 200) {
-                props.comments = resCom.data.data;
+                const comments = resCom.data.data.map(comment => { return {...comment, indexSize: 1}})
+                props.comments = comments;
             }
 
             const listAuthorId = [resPost.data.data.authorId];
