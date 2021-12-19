@@ -56,3 +56,31 @@ export const createCommentChildApi = (content, postId, authorId, parentId, token
         )
         .catch((err) => err.response);
 };
+
+export const deleteCommentApi = (commentId, postId, authorId, token) => {
+    const data = { commentId, postId, authorId };
+    return axios({
+        method: 'PUT',
+        url: `${host}/remove-self`,
+        headers: { Authorization: `${token}` },
+        data,
+    })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => err.response);
+};
+
+export const editCommentApi = (commentId, postId, authorId, content, token) => {
+    const data = { commentId, postId, authorId, content };
+    return axios({
+        method: 'PUT',
+        url: `${host}`,
+        headers: { Authorization: `${token}` },
+        data,
+    })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => err.response);
+};

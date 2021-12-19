@@ -23,7 +23,7 @@ export const loadingHome = async (ctx) => {
     if (postId && token) {
         //get post
         const resPost = await getPostByIDApi(postId, token);
-        if (resPost.status === 200) {
+        if (resPost?.status === 200) {
             props.postInfo = resPost.data.data;
             // get list comments
             const resCom = await getCommentInPostApi(postId, token);
@@ -58,11 +58,11 @@ export const loadingHome = async (ctx) => {
             }
         }
         if (
-            resPost.status === 400 ||
-            resPost.status === 404 ||
-            resPost.status === 403 ||
-            resPost.status === 401 ||
-            resPost.status === 500
+            resPost?.status === 400 ||
+            resPost?.status === 404 ||
+            resPost?.status === 403 ||
+            resPost?.status === 401 ||
+            resPost?.status === 500
         ) {
             props.isInvalid = true;
         }

@@ -5,6 +5,8 @@ import { useRef, useState } from 'react';
 import { TextField, Grid, Select, MenuItem } from '@material-ui/core';
 import { CustomButton } from '../button';
 import { reportOptions } from '../../utils/constant';
+import { ConfirmDialog } from '../dialog/confirm';
+import { notify } from '../../utils/notify';
 
 export const Comment = ({
     user,
@@ -17,24 +19,41 @@ export const Comment = ({
     isPost,
     openReport,
     setOpenReport,
-    addReport
+    addReport,
+    isAuthor,
+    deleteComment,
+    edit,
+    setEdit,
+    editComment
 }) => {
     const [com, setCom] = useState('');
     const [report, setReport] = useState('');
     const [reportType, setReportType] = useState(reportOptions[0].type);
     const indexValue = 25 * comment.indexSize || 0;
+    const [openConfirm, setOpenConfirm] = useState(false);
     const handleGetMore = () => {
         getMore(comment);
     };
+    const [editContent, setEditContent] = useState('');
+    console.log("edit", edit)
 
     const handleSetReply = () => {
         setReply(comment.commentId || comment.createdTime);
         setOpenReport(null);
+        setEdit(null);
     };
 
     const handleOpenReport = () => {
         setOpenReport(comment.commentId || comment.createdTime);
         setReply(null);
+        setEdit(null);
+    };
+
+    const handleEditComment = () => {
+        setEditContent(comment.content)
+        setEdit(comment.commentId);
+        setReply(null);
+        setOpenReport(null);
     };
 
     const handleChangeReport = (event) => {
@@ -49,12 +68,31 @@ export const Comment = ({
     };
 
     const handleCreateReport = async () => {
-        const result = await addReport(report, reportType, comment.commentId, comment.postId)
+        const result = await addReport(report, reportType, comment.commentId, comment.postId);
         if (result) {
-            setReportType(reportOptions[0].type)
-            setReport('')
-            setOpenReport(null)
+            setReportType(reportOptions[0].type);
+            setReport('');
+            setOpenReport(null);
         }
+    };
+
+    const handleDeleteComment = async () => {
+        setOpenConfirm(false);
+        deleteComment(comment.commentId);
+    };
+
+    const handleEdit = async () => {
+        if(editContent===''){
+            notify.warn('Nhập nội dung muốn chỉnh sửa')
+        } else if(editContent === comment.content) {
+            notify.warn('Nhập nội dung muốn chỉnh sửa')
+        } else {
+            const result = await editComment(comment.commentId, editContent)
+            if (result) {
+                setEdit(null)
+            }
+        }
+
     }
 
     const inputEl = useRef(null);
@@ -89,54 +127,101 @@ export const Comment = ({
                     <span className={`${styles.commentTextWapper} ${styles.comment}`}>
                         {isPost ? (
                             <div dangerouslySetInnerHTML={{ __html: comment.content }} />
+                        ) : edit === comment.commentId ? (
+                            <Grid container>
+                                <Grid item container xs={10}>
+                                    <TextField
+                                        className={styles.backgroundWhite}
+                                        id="outlined-multiline-flexible"
+                                        label="Nhập nội dung bình luận"
+                                        multiline
+                                        maxRows={4}
+                                        variant="outlined"
+                                        value={editContent}
+                                        onChange={(e) => setEditContent(e.target.value)}
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid
+                                    item
+                                    container
+                                    direction="column"
+                                    alignItems="flex-end"
+                                    justifyContent="center"
+                                    xs={2}
+                                    className={styles.btnCreateCommentWapper}
+                                >
+                                    <CustomButton
+                                        text="Xác nhận"
+                                        styleNomal={true}
+                                        onClick={handleEdit}
+                                    />
+                                </Grid>
+                            </Grid>
                         ) : (
                             comment.content
                         )}
                     </span>
                     <div>
                         <span className={`${styles.reportText}`}>{''}</span>
+                        {isAuthor && (
+                            <>
+                                <span
+                                    className={styles.deleteText}
+                                    onClick={() => {
+                                        setOpenConfirm(true);
+                                    }}
+                                >
+                                    Xóa
+                                </span>
+                                <span
+                                    className={styles.editText}
+                                    onClick={() => handleEditComment()}
+                                >
+                                    {' '}
+                                    Sửa{' '}
+                                </span>
+                            </>
+                        )}
                         {comment?.totalChildren != 0 && (
                             <span
                                 className={styles.seeMoreComment}
                                 onClick={() => handleGetMore()}
-                            >{`See more ${comment.totalChildren} comment`}</span>
+                            >{`Xem thêm ${comment.totalChildren} bình luận`}</span>
                         )}
-                        <span
-                            className={`${styles.reportText}`}
-                            onClick={() => handleOpenReport()}
-                        >
-                            Report
+                        <span className={`${styles.reportText}`} onClick={() => handleOpenReport()}>
+                            Báo cáo
                         </span>
                         <span className={`${styles.replyText}`} onClick={() => handleSetReply()}>
-                            Reply
+                            Trả lời
                         </span>
                     </div>
                 </div>
             </div>
             {(reply === comment.commentId || reply === comment.createdTime) && (
-                    <div className={styles.commentReplyWapper}>
-                        {/* <input  placeholder="Nhập nội dung bình luận" /> */}
-                        <TextField
-                            className={styles.backgroundWhite}
-                            id="outlined-multiline-flexible"
-                            label="Nhập nội dung bình luận"
-                            multiline
-                            maxRows={4}
-                            variant="outlined"
-                            value={com}
-                            onChange={(e) => setCom(e.target.value)}
-                            ref={inputEl}
-                            fullWidth
+                <div className={styles.commentReplyWapper}>
+                    {/* <input  placeholder="Nhập nội dung bình luận" /> */}
+                    <TextField
+                        className={styles.backgroundWhite}
+                        id="outlined-multiline-flexible"
+                        label="Nhập nội dung bình luận"
+                        multiline
+                        maxRows={4}
+                        variant="outlined"
+                        value={com}
+                        onChange={(e) => setCom(e.target.value)}
+                        ref={inputEl}
+                        fullWidth
+                    />
+                    <div className={styles.btnCreateCommentWapper}>
+                        <CustomButton
+                            text="Bình luận"
+                            styleNomal={true}
+                            onClick={handleCreateComment}
                         />
-                        <div className={styles.btnCreateCommentWapper}>
-                            <CustomButton
-                                text="Bình luận"
-                                styleNomal={true}
-                                onClick={handleCreateComment}
-                            />
-                        </div>
                     </div>
-                )}
+                </div>
+            )}
             {(openReport === comment.commentId || openReport === comment.createdTime) && (
                 <Grid container className={styles.reportWapper} spacing={1}>
                     <Grid item container xs={10} spacing={1}>
@@ -177,7 +262,7 @@ export const Comment = ({
                         alignItems="flex-end"
                         justifyContent="center"
                         xs={2}
-                        className={styles.btnCreateCommentWapper} 
+                        className={styles.btnCreateCommentWapper}
                     >
                         <CustomButton
                             text="Report"
@@ -187,6 +272,12 @@ export const Comment = ({
                     </Grid>
                 </Grid>
             )}
+            <ConfirmDialog
+                openDialog={openConfirm}
+                setOpenDialog={setOpenConfirm}
+                onConfirmed={handleDeleteComment}
+                text="Xác nhận xóa bình luận"
+            />
         </div>
     );
 };

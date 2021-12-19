@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import { notify } from '../../utils/notify';
 import { registerApi, loginApi } from '../../api/user';
 
 const slice = createSlice({
@@ -10,7 +10,7 @@ const slice = createSlice({
     },
     reducers: {
         registerAction: (state, action) => {
-            alert('Tạo tài khoản thành công');
+            notify.success('Tạo tài khoản thành công');
         },
         loginAction: (state, action) => {
             state.user = {
@@ -48,28 +48,28 @@ export const setInfoUser = (userInfo) => async (dispatch) => {
 
 export const registerUser = (fullName, email, username, password) => async (dispatch) => {
     if (username === '' || password === '' || fullName === '' || email ==='')
-        return alert('username, password, email or name none');
+        return notify.warn('Điền đầy đủ thông tin');
     try {
         const res = await registerApi(fullName, email, username, password);
         if (res.data) {
             if (res.data.code === 200) dispatch(registerAction(res.data));
-            else return alert('username or email was exist');
+            else return notify.warn('username hoặc email đã tồn tại');
         } 
     } catch (e) {
-        return alert('fail');
+        return notify.error('Có lỗi xảy ra');
     }
 };
 
 export const loginUser = (username, password) => async (dispatch) => {
-    if (username === '' || password === '') return alert('username or password none');
+    if (username === '' || password === '') return notify.warn('username hoặc pass trống');
     try{
         const res = await loginApi(username, password);
         if (res.data) {
             if (res.data?.code === 200) dispatch(loginAction(res.data));
-            else return alert(res.message);
-        } else return alert('username was exist');
+            else return notify.warn(res.message);
+        } else return notify.error('username was exist');
     } catch (e) {
-        return alert("fail")
+        return notify.error("Có lỗi xảy ra")
     }
 };
 
@@ -77,6 +77,6 @@ export const logoutUser = () => async (dispatch) => {
     try {
         dispatch(logoutAction());
     } catch (e) {
-        return alert('fail');
+        return notify.error('Có lỗi xảy ra');
     }
 };
