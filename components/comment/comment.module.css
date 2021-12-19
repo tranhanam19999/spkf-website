@@ -83,7 +83,7 @@
 .seeMoreComment {
     position: absolute;
     bottom: 0;
-    right: 65px;
+    right: 220px;
     font-size: 12px;
     line-height: 14px;
     font-weight: bold;
@@ -107,6 +107,11 @@
 .repName {
     padding-bottom: 7px;
     font-weight: 700;
+
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
 }
 
 .commentReplyWapper {

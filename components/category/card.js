@@ -6,16 +6,20 @@ import Image from 'next/image';
 import styles from './category.module.css';
 import { useRouter } from 'next/router';
 
-export const CategoryCard = ({cate}) => {
+export const CategoryCard = ({ cate }) => {
     return (
         <div className={styles.cardWapper}>
             <div className={styles.titleWapper}>
                 <span className={styles.categoryCardTitle}>{cate.name}</span>
                 {/* <span className={styles.textTimeView}>{`Threads: ${cate.count ? cate.count : 0}`}</span> */}
             </div>
-            {/* <div className={styles.imgWapper}>
-                <img src="/no-image.jpg" className={styles.imageCircle} />
-            </div> */}
+            <div className={styles.imgWapper}>
+                {cate.imageUrl ? (
+                    <img src={cate.imageUrl} className={styles.imageCircle} />
+                ) : (
+                    <img src="/no-image.png" className={styles.imageCircle} />
+                )}
+            </div>
         </div>
-    )
-}
+    );
+};

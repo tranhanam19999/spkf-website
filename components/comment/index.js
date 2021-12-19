@@ -29,11 +29,11 @@ export const Comment = ({
 
     const handleSetReply = () => {
         setReply(comment.commentId || comment.createdTime);
-        setOpenReport && setOpenReport(false);
+        setOpenReport(null);
     };
 
     const handleOpenReport = () => {
-        setOpenReport(!openReport);
+        setOpenReport(comment.commentId || comment.createdTime);
         setReply(null);
     };
 
@@ -42,18 +42,18 @@ export const Comment = ({
     };
 
     const handleCreateComment = async () => {
-        const result = await addComment(com, comment.commentId, comment.postId);
+        const result = await addComment(com, comment.commentId, comment.postId, comment);
         if (result) {
             setCom('');
         }
     };
 
     const handleCreateReport = async () => {
-        const result = await addReport(report, reportType)
+        const result = await addReport(report, reportType, comment.commentId, comment.postId)
         if (result) {
             setReportType(reportOptions[0].type)
             setReport('')
-            setOpenReport(false)
+            setOpenReport(null)
         }
     }
 
@@ -101,22 +101,19 @@ export const Comment = ({
                                 onClick={() => handleGetMore()}
                             >{`See more ${comment.totalChildren} comment`}</span>
                         )}
-                        {isPost && (
-                            <span
-                                className={`${styles.reportText}`}
-                                onClick={() => handleOpenReport()}
-                            >
-                                Report
-                            </span>
-                        )}
+                        <span
+                            className={`${styles.reportText}`}
+                            onClick={() => handleOpenReport()}
+                        >
+                            Report
+                        </span>
                         <span className={`${styles.replyText}`} onClick={() => handleSetReply()}>
                             Reply
                         </span>
                     </div>
                 </div>
             </div>
-            {(reply === comment.commentId || reply === comment.createdTime) &&
-                (!isPost || !openReport) && (
+            {(reply === comment.commentId || reply === comment.createdTime) && (
                     <div className={styles.commentReplyWapper}>
                         {/* <input  placeholder="Nhập nội dung bình luận" /> */}
                         <TextField
@@ -140,7 +137,7 @@ export const Comment = ({
                         </div>
                     </div>
                 )}
-            {isPost && openReport && (
+            {(openReport === comment.commentId || openReport === comment.createdTime) && (
                 <Grid container className={styles.reportWapper} spacing={1}>
                     <Grid item container xs={10} spacing={1}>
                         <Grid item xs={12}>
