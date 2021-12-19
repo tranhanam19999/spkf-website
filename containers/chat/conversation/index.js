@@ -29,7 +29,7 @@ export const ConversationList = (props) => {
 
     return (
         <div className={styles.chatConversationWrapper}>
-            {messages.map((message, index) => (
+            {mockChatList.map((message, index) => (
                     <ChatDetail
                         key={index}
                         text={message.text}
