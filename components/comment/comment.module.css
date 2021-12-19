@@ -63,7 +63,7 @@
 .reportText {
     position: absolute;
     bottom: 0;
-    left: 20px;
+    right: 120px;
     font-size: 12px;
     line-height: 14px;
     font-weight: bold;
@@ -90,6 +90,12 @@
     cursor: pointer;
 }
 
+.replyText:hover ,
+.reportText:hover ,
+.seeMoreComment:hover {
+    text-decoration: underline;
+}
+
 .repComment {
     display: flex;
     flex-direction: column;
@@ -109,6 +115,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.reportWapper {
+    padding: 10px 40px 10px 160px;
+    border-bottom: 2px solid var(--silver-color);
+}
+
+.textFieldCreate.textFieldCreate.textFieldCreate {
+    background-color: var(--white-color);
 }
 
 .btnCreateCommentWapper {

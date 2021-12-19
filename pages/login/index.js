@@ -10,7 +10,6 @@ import { loginApi } from '../../api/user';
 export const loadingHome = async (ctx) => {
     let { loginInfo } = ctx.query;
     const props = {
-        home: { a: 3 },
         isLogin: false,
     };
     const { res } = ctx;

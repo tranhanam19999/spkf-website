@@ -9,6 +9,13 @@ export const color = {
     buttonBackgroundColor: '#578199',
 };
 
+export const reportOptions = [
+    { type: 'SCAM', name: 'Lừa đảo'},
+    { type: 'IDENTITY_THEFT', name: 'Mạo danh'},
+    { type: 'UNTRUTHFUL', name: 'Sai sự thật'},
+    { type: 'OTHER', name: 'Khác'}
+]
+
 export const ageMarks = [
     {
         value: 18,

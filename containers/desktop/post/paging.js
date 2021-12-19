@@ -10,16 +10,22 @@ import {
     getCommentByCommentIdApi,
 } from '../../../api/comment';
 import { getUserInfoApi } from '../../../api/user';
+import { reportPostApi } from '../../../api/post';
 import { useDispatch, useSelector } from 'react-redux';
+import { setInfoUser, logoutUser } from '../../../store/user/userSlice';
 import { useRouter } from 'next/router';
+import { notify } from '../../../utils/notify';
 
 export const PostDetail = (props) => {
+    console.log('props', props);
     const { postInfo, listAuthor, comments, token } = props;
     const { user } = useSelector((state) => state.user);
     const [postDetail, setPostDetail] = useState(postInfo);
     const [commentList, setCommentList] = useState([]);
     const userInfo = listAuthor.find((user) => user.userId === postInfo.authorId);
     const [reply, setReply] = useState(null);
+    const [openReport, setOpenReport] = useState(false)
+    const dispatch = useDispatch();
     const router = useRouter();
 
     const [postComment, setPostComment] = useState({
@@ -28,7 +34,12 @@ export const PostDetail = (props) => {
         userInfo: postDetail.userInfo,
         totalChildren: 0,
         postId: postDetail.postId,
+        indexSize: 0,
     });
+
+    const handleRedirect = (path) => {
+        router.push(path);
+    };
 
     const handleGetMore = async (comment) => {
         try {
@@ -58,9 +69,10 @@ export const PostDetail = (props) => {
                         return {
                             ...com,
                             userInfo: au,
+                            indexSize: comment.indexSize + 1,
                         };
                     } else {
-                        return { ...com, userInfo: {} };
+                        return { ...com, userInfo: {}, indexSize: comment.indexSize + 1 };
                     }
                 });
 
@@ -76,8 +88,9 @@ export const PostDetail = (props) => {
 
     const addComment = async (com, commentId, postId) => {
         try {
+            let resCom
             if (commentId) {
-                const resCom = await createCommentChildApi(
+                resCom = await createCommentChildApi(
                     com,
                     postInfo.postId,
                     user.userId,
@@ -91,31 +104,59 @@ export const PostDetail = (props) => {
                     const commentItem = commentList.find((com) => com.commentId === commentId);
                     comList.splice(commentList.indexOf(commentItem) + 1, 0, data);
                     setCommentList(comList);
+                    setReply(null);
+                    notify.success('Thành công')
+                    return true;
                 }
-                setReply(null)
-                return true;
             } else {
-                const resCom = await createCommentPostApi(
-                    com,
-                    postInfo.postId,
-                    user.userId,
-                    token
-                );
+                resCom = await createCommentPostApi(com, postInfo.postId, user.userId, token);
                 if (resCom.status === 200) {
                     let data = resCom.data.data;
                     data.userInfo = user;
                     let comList = commentList.slice();
                     comList.splice(0, 0, data);
                     setCommentList(comList);
+                    setReply(null);
+                    notify.success('Thành công')
+                    return true;
                 }
-                setReply(null)
-                return true;
+            }
+            if (resCom.status === 403 && resCom.data.error_code === 'UNAUTHORIZED') {
+                notify.warn('Hết hạn đăng nhập')
+                dispatch(logoutUser());
+                handleRedirect('/login');
+                return false;
+            } else {
+                notify.warn('Có lỗi xảy ra')
+                return false;
             }
         } catch (e) {
-            console.log(e.response);
+            notify.error('Có lỗi xảy ra')
             return false;
         }
     };
+
+    const addReport = async (report, reportType) => {
+        console.log("report, reportType", report, reportType)
+        if(report === '') {
+            notify.warn('Phải nhập nội dung report')
+            return false
+        }
+        const response = await reportPostApi(postInfo.postId, reportType, report, token);
+        if (response.status === 200) { 
+            notify.success('Thành công')
+            return true;
+        } else if (response.status === 403 && response.data.error_code === 'UNAUTHORIZED') {
+            console.log("response", response)
+            notify.warn('Hết hạn đăng nhập')
+            dispatch(logoutUser());
+            handleRedirect('/login');
+            return false;
+        } else {
+            notify.error('Có lỗi xảy ra')
+            return false;
+        }
+    }
 
     useEffect(() => {
         if (comments.length > 0 && listAuthor) {
@@ -153,9 +194,12 @@ export const PostDetail = (props) => {
                 setReply={setReply}
                 addComment={addComment}
                 isPost={true}
+                openReport={openReport}
+                setOpenReport={setOpenReport}
+                addReport={addReport}
             />
-            <div style={{ marginLeft: 25 }}>
-                {commentList.length > 0 && commentList.map((item, index) => {
+            {commentList.length > 0 &&
+                commentList.map((item, index) => {
                     let repComment = undefined;
                     if (item.parentId) {
                         repComment = commentList.find((i) => i.commentId === item.parentId);
@@ -173,7 +217,6 @@ export const PostDetail = (props) => {
                         />
                     );
                 })}
-            </div>
         </div>
     ) : (
         <></>
