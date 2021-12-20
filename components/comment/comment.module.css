@@ -1,7 +1,7 @@
 .commentContainer {
-    border-bottom: 2px solid var(--silver-color);
     padding-bottom: 10px;
     display: flex;
+    width: 100%;
 }
 
 .imageCircle {
@@ -58,6 +58,20 @@
     line-height: 16px;
     letter-spacing: 0.03em;
     color: var(--black-color);
+}
+
+.commentRef {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.03em;
+    color: var(--black-color);
+
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
 }
 
 .reportText {
@@ -138,7 +152,7 @@
 
 .commentReplyWapper {
     padding: 10px 40px 10px 160px;
-    border-bottom: 2px solid var(--silver-color);
+    border-top: 2px solid var(--silver-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -146,7 +160,7 @@
 
 .reportWapper {
     padding: 10px 40px 10px 160px;
-    border-bottom: 2px solid var(--silver-color);
+    border-top: 2px solid var(--silver-color);
 }
 
 .textFieldCreate.textFieldCreate.textFieldCreate {
@@ -159,4 +173,32 @@
 
 .backgroundWhite.backgroundWhite.backgroundWhite > div {
     background-color: var(--white-color)
+}
+
+.lineWapper {
+    height: auto;
+    width: 25px;
+    /* border-left: 2px solid var(--silver-color); */
+}
+
+.boderBottom {
+    /* border-bottom: 2px solid var(--silver-color); */
+}
+
+.line {
+    height: 50%;
+    width: 25px;
+}
+
+.wapper {
+    display: flex;
+    width: 100%;
+}
+
+.cardComment {
+    width: 100%;
+    border: 2px solid var(--silver-color);
+    margin: 4px;
+    border-radius: 8px;
+    background-color: var(--background-comment-color);
 }
