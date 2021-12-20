@@ -52,6 +52,7 @@
     min-height: 65px;
     justify-content: space-between;
     background-color: var(--geyser-color);
+    border-radius: 4px;
     cursor: pointer;
 }
 
@@ -86,12 +87,25 @@
     padding: 0;
     max-height: 318px;
     overflow: auto;
+
+    /* border-right: 2px solid var(--silver-color);
+    border-bottom: 2px solid var(--silver-color);
+    border-left: 2px solid var(--silver-color);
+
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px; */
 }
 
 .listCateWapper.listCateWapper.listCateWapper {
     padding: 0;
     max-height: 438px;
     overflow: auto;
+    /* border-right: 2px solid var(--silver-color);
+    border-bottom: 2px solid var(--silver-color);
+    border-left: 2px solid var(--silver-color);
+
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px; */
 }
 
 .cardNewsWapper.cardNewsWapper.cardNewsWapper {

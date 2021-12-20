@@ -61,10 +61,17 @@
     padding: 0;
     max-height: 318px;
     overflow: auto;
+
+    /* border-right: 2px solid var(--silver-color);
+    border-bottom: 2px solid var(--silver-color);
+    border-left: 2px solid var(--silver-color);
+
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px; */
 }
 
 .cardNewsWapper.cardNewsWapper.cardNewsWapper {
-    padding: 4px
+    padding: 4px;
 }
 
 .newsWapper {

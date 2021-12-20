@@ -48,7 +48,10 @@
 
 .postDetailContainer {
     width: 100%;
-    background-color: var(--geyser-color);
+    background-color: var(--secondary-color);
+
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
 .createWapper.createWapper.createWapper {
@@ -90,3 +93,4 @@
     display: flex;
     padding: 15px 0px 0px 0px;
 }
+

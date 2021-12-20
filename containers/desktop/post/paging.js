@@ -11,6 +11,7 @@ import {
 } from '../../../api/comment';
 import { getUserInfoApi } from '../../../api/user';
 import { reportApi } from '../../../api/report';
+import { deleteCommentApi, editCommentApi } from '../../../api/comment';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInfoUser, logoutUser } from '../../../store/user/userSlice';
 import { useRouter } from 'next/router';
@@ -20,11 +21,13 @@ export const PostDetail = (props) => {
     console.log('props', props);
     const { postInfo, listAuthor, comments, token } = props;
     const { user } = useSelector((state) => state.user);
+    console.log('user', user);
     const [postDetail, setPostDetail] = useState(postInfo);
     const [commentList, setCommentList] = useState([]);
     const userInfo = listAuthor.find((user) => user.userId === postInfo.authorId);
     const [reply, setReply] = useState(null);
-    const [openReport, setOpenReport] = useState(null)
+    const [openReport, setOpenReport] = useState(null);
+    const [edit, setEdit] = useState(null);
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -80,6 +83,18 @@ export const PostDetail = (props) => {
                 comList[commentList.indexOf(comment)].totalChildren = 0;
                 comList.splice(commentList.indexOf(comment) + 1, 0, ...conmentTemp);
                 setCommentList(comList);
+            } else if (
+                commentResult.status === 403 &&
+                commentResult.data.error_code === 'UNAUTHORIZED'
+            ) {
+                notify.warn('Hết hạn đăng nhập');
+                dispatch(logoutUser());
+                handleRedirect('/login');
+                return false;
+            } else {
+                console.log('listAu', commentResult);
+                notify.warn('Có lỗi xảy ra');
+                return false;
             }
         } catch (e) {
             console.log('error', e.response);
@@ -88,7 +103,7 @@ export const PostDetail = (props) => {
 
     const addComment = async (com, commentId, postId, comment) => {
         try {
-            let resCom
+            let resCom;
             if (commentId) {
                 resCom = await createCommentChildApi(
                     com,
@@ -106,7 +121,7 @@ export const PostDetail = (props) => {
                     comList.splice(commentList.indexOf(commentItem) + 1, 0, data);
                     setCommentList(comList);
                     setReply(null);
-                    notify.success('Thành công')
+                    notify.success('Thành công');
                     return true;
                 }
             } else {
@@ -119,51 +134,122 @@ export const PostDetail = (props) => {
                     comList.splice(0, 0, data);
                     setCommentList(comList);
                     setReply(null);
-                    notify.success('Thành công')
+                    notify.success('Thành công');
                     return true;
                 }
             }
             if (resCom.status === 403 && resCom.data.error_code === 'UNAUTHORIZED') {
-                notify.warn('Hết hạn đăng nhập')
+                notify.warn('Hết hạn đăng nhập');
                 dispatch(logoutUser());
                 handleRedirect('/login');
                 return false;
             } else {
-                notify.warn('Có lỗi xảy ra')
+                notify.warn('Có lỗi xảy ra');
                 return false;
             }
         } catch (e) {
-            notify.error('Có lỗi xảy ra')
+            notify.error('Có lỗi xảy ra');
             return false;
         }
     };
 
     const addReport = async (report, reportType, commentId, postId) => {
-        console.log("report, reportType", report, reportType)
-        if(report === '') {
-            notify.warn('Phải nhập nội dung report')
-            return false
-        }
-        let response
-        if(commentId) {
-            response = await reportApi(null, commentId, user.userId, reportType, report, token)
-        } else {
-            response = await reportApi(postInfo.postId, null, user.userId, reportType, report, token)
-        }
-        if (response.status === 200) { 
-            notify.success('Thành công')
-            return true;
-        } else if (response.status === 403 && response.data.error_code === 'UNAUTHORIZED') {
-            console.log("response", response)
-            notify.warn('Hết hạn đăng nhập')
-            dispatch(logoutUser());
-            handleRedirect('/login');
-            return false;
-        } else {
-            notify.error('Có lỗi xảy ra')
+        if (report === '') {
+            notify.warn('Phải nhập nội dung report');
             return false;
         }
-    }
+        try {
+            let response;
+            if (commentId) {
+                response = await reportApi(null, commentId, user.userId, reportType, report, token);
+            } else {
+                response = await reportApi(
+                    postInfo.postId,
+                    null,
+                    user.userId,
+                    reportType,
+                    report,
+                    token
+                );
+            }
+            if (response.status === 200) {
+                notify.success('Thành công');
+                return true;
+            } else if (response.status === 403 && response.data.error_code === 'UNAUTHORIZED') {
+                console.log('response', response);
+                notify.warn('Hết hạn đăng nhập');
+                dispatch(logoutUser());
+                handleRedirect('/login');
+                return false;
+            } else {
+                notify.error('Có lỗi xảy ra');
+                return false;
+            }
+        } catch (e) {}
+    };
+
+    const deleteComment = async (commentId) => {
+        try {
+            const resDelete = await deleteCommentApi(
+                commentId,
+                postInfo.postId,
+                user.userId,
+                token
+            );
+            if (resDelete.status === 200) {
+                let comList = commentList.slice();
+                const commentItem = commentList.find((com) => com.commentId === commentId);
+                comList.splice(commentList.indexOf(commentItem), 1);
+                setCommentList(comList);
+                notify.success('Thành công');
+                return true;
+            } else if (resDelete.status === 403 && resDelete.data.error_code === 'UNAUTHORIZED') {
+                notify.warn('Hết hạn đăng nhập');
+                dispatch(logoutUser());
+                handleRedirect('/login');
+                return false;
+            } else {
+                notify.warn('Có lỗi xảy ra');
+                return false;
+            }
+        } catch (e) {
+            notify.warn('Có lỗi xảy ra');
+            return false;
+        }
+    };
+
+    const editComment = async (commentId, content) => {
+        console.log("commentId, content", commentId, content)
+        try {
+            const resEdit = await editCommentApi(
+                commentId,
+                postInfo.postId,
+                user.userId,
+                content,
+                token
+            );
+            if (resEdit.status === 200) {
+                console.log("resEdit", resEdit, commentId, content)
+                let comList = commentList.slice();
+                const commentItem = commentList.find((com) => com.commentId === commentId);
+                comList[commentList.indexOf(commentItem)].content = content
+                setCommentList(comList);
+                notify.success('Thành công');
+                return true;
+            } else if (resEdit.status === 403 && resEdit.data.error_code === 'UNAUTHORIZED') {
+                notify.warn('Hết hạn đăng nhập');
+                dispatch(logoutUser());
+                handleRedirect('/login');
+                return false;
+            } else {
+                notify.warn('Có lỗi xảy ra');
+                return false;
+            }
+        } catch (e) {
+            notify.warn('Có lỗi xảy ra');
+            return false;
+        }
+    };
 
     useEffect(() => {
         if (comments.length > 0 && listAuthor) {
@@ -208,6 +294,7 @@ export const PostDetail = (props) => {
             {commentList.length > 0 &&
                 commentList.map((item, index) => {
                     let repComment = undefined;
+                    let isAuthor = Boolean(user.userId === item.userInfo.userId);
                     if (item.parentId) {
                         repComment = commentList.find((i) => i.commentId === item.parentId);
                     }
@@ -224,6 +311,11 @@ export const PostDetail = (props) => {
                             openReport={openReport}
                             setOpenReport={setOpenReport}
                             addReport={addReport}
+                            isAuthor={isAuthor}
+                            deleteComment={deleteComment}
+                            edit={edit}
+                            setEdit={setEdit}
+                            editComment={editComment}
                         />
                     );
                 })}
