@@ -178,11 +178,11 @@
 .lineWapper {
     height: auto;
     width: 25px;
-    /* border-left: 2px solid var(--silver-color); */
+    border-left: 2px solid var(--silver-color);
 }
 
 .boderBottom {
-    /* border-bottom: 2px solid var(--silver-color); */
+    border-bottom: 2px solid var(--silver-color);
 }
 
 .line {
