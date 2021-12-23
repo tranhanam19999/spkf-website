@@ -52,7 +52,7 @@ export const RenderCategoryDesktop = (props) => {
                             <div className={styles.emptyText}>Chưa có dữ liệu</div>
                         ) : (
                             <Grid item container xs={12} className={styles.listCateWapper}>
-                                {listPost.map((post, index) => {
+                                {listPost.reverse().map((post, index) => {
                                     return (
                                         <Grid
                                             item
