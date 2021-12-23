@@ -98,7 +98,7 @@ export const RenderHomeDesktop = (props) => {
                                     <MyCardHeader title="Bản tin" />
                                 </Grid>
                                 <Grid item container xs={12} className={styles.listCart}>
-                                    {listPost.map((item, index) => {
+                                    {listPost.reverse().map((item, index) => {
                                         return (
                                             <Grid
                                                 key={`post-${index}`}
