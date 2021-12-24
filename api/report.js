@@ -13,7 +13,7 @@ export const reportApi = (postId, commentId, authorId, reportedType, reportedRea
         method: 'PUT',
         headers: { Authorization: `${token}` },
         data,
-        url: `${host}/report`,
+        url: `${host}`,
         })
         .then((res) => {
             return res;
