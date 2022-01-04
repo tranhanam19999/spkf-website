@@ -33,13 +33,11 @@ export const Comment = ({
     const valueSize = Array(parseInt(indexValue))
         .fill()
         .map((_, index) => 1);
-    console.log(comment.content, valueSize);
     const [openConfirm, setOpenConfirm] = useState(false);
     const handleGetMore = () => {
         getMore(comment);
     };
     const [editContent, setEditContent] = useState('');
-    console.log('edit', edit);
 
     const handleSetReply = () => {
         setReply(comment.commentId || comment.createdTime);

@@ -3,6 +3,7 @@ import { getListPostByCategory, getListPostApi } from '../../api/post';
 import { getCookie } from '../../utils';
 import { getUserInfoApi } from '../../api/user';
 import { getCategoryInfoApi, getCategoryListApi } from '../../api/category';
+import { limitGetPost } from '../../utils/constant'
 
 export const loadingCategory = async (ctx) => {
     const props = {
@@ -14,6 +15,9 @@ export const loadingCategory = async (ctx) => {
         categorys: [],
         totalPost: 0,
     };
+    const page =  ctx.query.page ? parseInt(ctx.query.page) : 1
+    const LimitGet = isNaN(page) ? 1 : page;
+
     const cookie = ctx.req.headers.cookie;
     const token = getCookie(cookie);
     props.token = token;
@@ -21,7 +25,7 @@ export const loadingCategory = async (ctx) => {
     const { categoryId } = ctx.query;
 
     if (token) {
-        const resListPost = await getListPostByCategory(categoryId, token, 0, 500);
+        const resListPost = await getListPostByCategory(categoryId, token,  (LimitGet - 1) * limitGetPost, limitGetPost);
         if (resListPost.status === 200) {
             if (resListPost.data.data?.length > 0) {
                 props.totalPost = resListPost.data.total;

@@ -5,6 +5,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { TrendingCard } from '../../../components/post/trendingCard';
 import { TitleCard } from '../../../components/post/titleCard';
 import { Grid, Typography, TextField, makeStyles, Box } from '@material-ui/core';
+import { Pagination } from '@material-ui/lab';
 import { CardPost } from '../../../components/post';
 import Image from 'next/image';
 import styles from './home.module.css';
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getListPost } from '../../../store/post/postSlice';
 import { setInfoUser, logoutUser } from '../../../store/user/userSlice';
 import { LoadingScreen } from '../../../components/loading';
+import { limitGetPost } from '../../../utils/constant';
 
 export const RenderHomeDesktop = (props) => {
     const { trendingPost, listPost, infoUser, categorys, totalPost } = props;
@@ -21,7 +23,9 @@ export const RenderHomeDesktop = (props) => {
     const dispatch = useDispatch();
     const { user, token } = useSelector((state) => state.user);
     const [isLoading, setIsloading] = useState(true);
-    const [total, setTotal] = useState(totalPost);
+    const total = Math.floor(totalPost / limitGetPost);
+    const page = router.query.page ? parseInt(router.query.page, 10) : 1;
+    const [pageCurrent, setPage] = useState(isNaN(page) ? 0 : page);
 
     const handleRedirectPost = (postId) => {
         router.push({
@@ -32,6 +36,17 @@ export const RenderHomeDesktop = (props) => {
 
     const handleRedirect = (path) => {
         router.push(path);
+    };
+
+    const handleChangePage = (event, value) => {
+        setIsloading(true);
+        router.push({
+            pathname: '/home',
+            query: {
+                page: value,
+            },
+        });
+        setPage(value);
     };
 
     useEffect(() => {
@@ -47,10 +62,9 @@ export const RenderHomeDesktop = (props) => {
         }
     }, [listPost, trendingPost, infoUser]);
 
-    return isLoading ? (
-        <LoadingScreen />
-    ) : (
+    return (
         <>
+            {isLoading && <LoadingScreen position={'fixed'}/>}
             <div className={styles.headerWapper}>
                 <Image
                     src="/spkf.png"
@@ -115,6 +129,21 @@ export const RenderHomeDesktop = (props) => {
                                 </Grid>
                             </Grid>
                         )}
+                        <Grid
+                            item
+                            xs={12}
+                            container
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="flex-start"
+                            className={styles.paginationWrapper}
+                        >
+                            <Pagination
+                                count={total}
+                                page={pageCurrent}
+                                onChange={(e, page) => handleChangePage(e, page)}
+                            />
+                        </Grid>
                     </Grid>
                     <Grid item xs={4} className={`${styles.rightBoxWapper}`}>
                         <Category listCategory={categorys} />

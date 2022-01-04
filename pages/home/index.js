@@ -3,8 +3,7 @@ import { getCookie } from '../../utils';
 import { getListPostApi } from '../../api/post';
 import { getUserInfoApi, getUserBytokenApi } from '../../api/user';
 import { getCategoryInfoApi, getCategoryListApi } from '../../api/category';
-
-const LIMIT = 50;
+import { limitGetPost } from '../../utils/constant'
 
 export const loadingHome = async (ctx) => {
     const props = {
@@ -16,11 +15,13 @@ export const loadingHome = async (ctx) => {
         categorys: [],
         totalPost: 0,
     };
+    const page =  ctx.query.page ? parseInt(ctx.query.page) : 1
+    const LimitGet = isNaN(page) ? 1 : page;
     const cookie = ctx.req.headers.cookie;
     const token = getCookie(cookie);
     props.token = token;
     if (token) {
-        const resListPost = await getListPostApi(token, 0, LIMIT);
+        const resListPost = await getListPostApi(token, (LimitGet - 1) * limitGetPost, limitGetPost);
         if (resListPost.status === 200) {
             if (resListPost.data.data?.length > 0) {
                 props.totalPost = resListPost.data.total;
