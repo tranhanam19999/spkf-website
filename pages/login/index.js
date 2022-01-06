@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, registerUser } from '../../store/user/userSlice';
 import { loginApi } from '../../api/user';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
 
 export const loadingHome = async (ctx) => {
     let { loginInfo } = ctx.query;
@@ -38,13 +39,13 @@ export async function getServerSideProps(ctx) {
         ...value,
     };
 
-    if(props.isLogin) {
+    if (props.isLogin) {
         return {
             redirect: {
-              destination: '/home',
-              permanent: false,
-            }
-        }
+                destination: '/home',
+                permanent: false,
+            },
+        };
     }
 
     return { props };
@@ -55,6 +56,7 @@ export const LoginPage = (props) => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user);
     const [isRegister, setIsRegister] = useState(false);
+    const [checkBox, setCheckBox] = useState(false);
 
     const loginForm = useForm();
     const submitForm = (form) => {
@@ -95,13 +97,24 @@ export const LoginPage = (props) => {
                             name="email"
                             placeholder="Nhập tên đăng nhập"
                             {...loginForm.register('email')}
+                            minLength="3"
+                            maxlength="20"
                         />
                         <input
-                            type="password"
+                            type={`${checkBox ? 'text' : 'password'}`}
                             className={styles.input}
                             name="password"
                             placeholder="Nhập mật khẩu"
                             {...loginForm.register('password')}
+                            minLength="3"
+                            maxlength="20"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox size="small" />}
+                            label="Hiển thị mật khẩu"
+                            checked={checkBox}
+                            className={styles.checkBox}
+                            onClick={() => setCheckBox(!checkBox)}
                         />
                         <div className={styles.buttonWapper}>
                             <Button className={styles.loginButton} type="submit" form="login-form">
@@ -138,23 +151,40 @@ export const LoginPage = (props) => {
                             className={styles.input}
                             name="email"
                             placeholder="Nhập email"
+                            minLength="3"
+                            maxlength="20"
                             {...registerForm.register('email')}
                         />
                         <input
                             className={styles.input}
                             name="username"
                             placeholder="Nhập tên đăng nhập"
+                            minLength="3"
+                            maxlength="20"
                             {...registerForm.register('username')}
                         />
                         <input
                             type="password"
                             className={styles.input}
-                            name="password"
+                            type={`${checkBox ? 'text' : 'password'}`}
                             placeholder="Nhập mật khẩu"
+                            minLength="3"
+                            maxlength="20"
                             {...registerForm.register('password')}
                         />
+                        <FormControlLabel
+                            control={<Checkbox size="small" />}
+                            label="Hiển thị mật khẩu"
+                            checked={checkBox}
+                            className={styles.checkBox}
+                            onClick={() => setCheckBox(!checkBox)}
+                        />
                         <div className={styles.buttonWapper}>
-                            <Button className={styles.loginButton} type="submit" form="register-form">
+                            <Button
+                                className={styles.loginButton}
+                                type="submit"
+                                form="register-form"
+                            >
                                 Đăng kí
                             </Button>
                             <a className={styles.btnRegister} onClick={() => setIsRegister(false)}>

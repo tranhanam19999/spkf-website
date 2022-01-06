@@ -18,10 +18,8 @@ import { useRouter } from 'next/router';
 import { notify } from '../../../utils/notify';
 
 export const PostDetail = (props) => {
-    console.log('props', props);
     const { postInfo, listAuthor, comments, token } = props;
     const { user } = useSelector((state) => state.user);
-    console.log('user', user);
     const [postDetail, setPostDetail] = useState(postInfo);
     const [commentList, setCommentList] = useState([]);
     const userInfo = listAuthor.find((user) => user.userId === postInfo.authorId);
@@ -92,7 +90,6 @@ export const PostDetail = (props) => {
                 handleRedirect('/login');
                 return false;
             } else {
-                console.log('listAu', commentResult);
                 notify.warn('Có lỗi xảy ra');
                 return false;
             }
@@ -176,7 +173,6 @@ export const PostDetail = (props) => {
                 notify.success('Thành công');
                 return true;
             } else if (response.status === 403 && response.data.error_code === 'UNAUTHORIZED') {
-                console.log('response', response);
                 notify.warn('Hết hạn đăng nhập');
                 dispatch(logoutUser());
                 handleRedirect('/login');
@@ -219,7 +215,6 @@ export const PostDetail = (props) => {
     };
 
     const editComment = async (commentId, content) => {
-        console.log("commentId, content", commentId, content)
         try {
             const resEdit = await editCommentApi(
                 commentId,
@@ -229,7 +224,6 @@ export const PostDetail = (props) => {
                 token
             );
             if (resEdit.status === 200) {
-                console.log("resEdit", resEdit, commentId, content)
                 let comList = commentList.slice();
                 const commentItem = commentList.find((com) => com.commentId === commentId);
                 comList[commentList.indexOf(commentItem)].content = content

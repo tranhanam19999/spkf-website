@@ -3,6 +3,8 @@ export const PATH = {
     TO_HOME: '/home',
 };
 
+export const limitGetPost = 20
+
 export const color = {
     primary: '#c4c4c4',
     secondary: '#ffffff',
