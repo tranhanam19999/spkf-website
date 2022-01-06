@@ -200,18 +200,22 @@ export const Comment = ({
                                     onClick={() => handleGetMore()}
                                 >{`Xem thêm ${comment.totalChildren} bình luận`}</span>
                             )}
-                            <span
-                                className={`${styles.reportText}`}
-                                onClick={() => handleOpenReport()}
-                            >
-                                Báo cáo
-                            </span>
-                            <span
-                                className={`${styles.replyText}`}
-                                onClick={() => handleSetReply()}
-                            >
-                                Trả lời
-                            </span>
+                            {!isAuthor && (
+                                <>
+                                    <span
+                                        className={`${styles.reportText}`}
+                                        onClick={() => handleOpenReport()}
+                                    >
+                                        Báo cáo
+                                    </span>
+                                    <span
+                                        className={`${styles.replyText}`}
+                                        onClick={() => handleSetReply()}
+                                    >
+                                        Trả lời
+                                    </span>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
